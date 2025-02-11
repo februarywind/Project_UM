@@ -2,8 +2,25 @@ using UnityEngine;
 
 public class DefaultAtackBase : MonoBehaviour
 {
+    private Animator animator;
+
+    private bool isCombo;
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
     public virtual void DefaultAtackActivate()
     {
-        Debug.Log("일반공격 사용");
+        if (!isCombo)
+        {
+            isCombo = true;
+            animator.SetTrigger("Atack");
+            return;
+        }
+        animator.SetTrigger("NextCombo");
+    }
+    private void AtackEnd()
+    {
+        isCombo = false;
     }
 }
