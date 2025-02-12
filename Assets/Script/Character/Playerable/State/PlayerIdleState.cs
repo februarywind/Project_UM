@@ -3,7 +3,9 @@ using UnityEngine.Windows;
 
 public class PlayerIdleState : PlayerStateBase
 {
-    public PlayerIdleState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM) : base(controller, characterStat, playerFSM){}
+    public PlayerIdleState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator) : base(controller, characterStat, playerFSM, animator)
+    {
+    }
 
     public override void OnStateEnter()
     {

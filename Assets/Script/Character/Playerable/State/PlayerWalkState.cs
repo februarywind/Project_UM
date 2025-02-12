@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class PlayerWalkState : PlayerStateBase
 {
-    public PlayerWalkState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM) : base(controller, characterStat, playerFSM) { }
+    public PlayerWalkState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator) : base(controller, characterStat, playerFSM, animator)
+    {
+    }
 
     public override void OnStateEnter()
     {
