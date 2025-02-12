@@ -26,7 +26,6 @@ public class U_BattleSkill : BattleSkillBase
     IEnumerator DashSkill()
     {
         float d = 0;
-        playerContoller.IsControl = false;
 
         while (d < dashTime)
         {
@@ -34,7 +33,5 @@ public class U_BattleSkill : BattleSkillBase
             d += 1 / dashTime * Time.deltaTime;
             yield return null;
         }
-
-        playerContoller.IsControl = true;
     }
 }

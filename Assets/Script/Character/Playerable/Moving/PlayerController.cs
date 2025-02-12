@@ -1,23 +1,19 @@
 using System.Collections;
 using UnityEngine;
 
+public enum StopAction
+{
+    All, Move, Dash, Gravity, Size
+}
+
 public class PlayerController : MonoBehaviour
 {
-    public bool IsControl { get; set; } = true; // 참조를 알기위한 프로퍼티 선언, 편하다!
+    public bool IsInput {  get; private set; }
 
-    [SerializeField] float speed;
-    [SerializeField] float runSpeed;
-    [SerializeField] float jumpHeight;
-    [SerializeField] float rotationSpeed;
-    [SerializeField] float dashTime;
-    [SerializeField] float dashSpeed;
-    [SerializeField] float gravity = -9.81f;
     [SerializeField] LayerMask groundLayer;
+    [SerializeField] PlayerCharacterStat characterStat;
 
-    private bool isRun;
-    private bool isDash;
-
-    private Vector3 moveDir;
+    private Vector3 InputDir;
 
     private float gravityVelocity;
 
@@ -29,48 +25,42 @@ public class PlayerController : MonoBehaviour
     private Coroutine blendCoroutine;
     private Coroutine dashCoroutine;
 
+    private PlayerFSM playerFSM;
+
     private void Awake()
     {
+        cam = Camera.main;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-        cam = Camera.main;
+        playerFSM = new(this, characterStat, animator);
     }
 
     private void Update()
     {
-        if (!IsControl)
-            return;
-
+        SetMoveDir();
+        playerFSM.OnUpdate();
         Gravity();
-        MoveControl();
-        Dash();
-
-        // 애니메이션 설정
-        if (blendCoroutine == null)
-            blendCoroutine = StartCoroutine(SetBlendValue(isDash ? 5 : isRun ? 2 : moveDir.magnitude));
-        if (!isDash)
-            characterController.Move(((moveDir * (isRun ? runSpeed : speed)) + Vector3.up * gravityVelocity) * Time.deltaTime);
     }
     private void Gravity()
     {
         // 공중에 있을 때 아래로 이동시킴, 땅에 닿으면 초기화
         if (characterController.isGrounded)
         {
-            gravityVelocity = -0.01f;
+            gravityVelocity = 0;
         }
         else
         {
-            gravityVelocity += gravity * Time.deltaTime;
+            gravityVelocity += characterStat.Gravity * Time.deltaTime;
         }
 
         // 캐릭터 컨트롤러는 바닥을 잘 인식 못해서 점프가 잘 안먹힘 Ray추가
-        if (Input.GetKeyDown(KeyCode.Space) && IsGround())
+        if (Input.GetKeyDown(KeyCode.Space) && (characterController.isGrounded || IsGround()))
         {
-            gravityVelocity = jumpHeight;
+            gravityVelocity = characterStat.JumpHeight;
         }
     }
 
-    private void MoveControl()
+    private void SetMoveDir()
     {
         // 입력값 받기
         float moveX = Input.GetAxis("Horizontal");
@@ -81,27 +71,22 @@ public class PlayerController : MonoBehaviour
         Vector3 camRight = cam.transform.right.RemoveOne(RemoveDir.Y).normalized;
 
         // 최종 이동 방향 계산
-        moveDir = (camForward * moveZ + camRight * moveX).normalized;
+        InputDir = (camForward * moveZ + camRight * moveX).normalized;
 
-        // 입력이 있을 때만 해당 방향으로 회전
-        if (moveDir != Vector3.zero)
-        {
-            PlayerRotate(moveDir);
-        }
-        else
-        {
-            isRun = false;
-        }
+        IsInput = (moveX + moveZ) != 0;
+    }
+    public void PlayerMove(float speed)
+    {
+        characterController.Move(((InputDir * speed) + Vector3.up * gravityVelocity) * Time.deltaTime);
+        PlayerRotate(InputDir);
     }
 
-
-    private void Dash()
+    public void DashHandler()
     {
         if (!Input.GetKeyDown(KeyCode.LeftShift) || dashCoroutine != null)
             return;
-
-        isDash = true;
-        dashCoroutine = StartCoroutine(DashStart());
+        playerFSM.ChangeState(EPlayerState.Dash);
+        dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
     }
 
     private void PlayerRotate(Vector3 moveDir)
@@ -114,24 +99,30 @@ public class PlayerController : MonoBehaviour
         rotateCoroutine = StartCoroutine(CharacterRotate(moveDir));
     }
 
+    public void MoveAnimationPlay(float value)
+    {
+        // 애니메이션 설정
+        if (blendCoroutine == null)
+            blendCoroutine = StartCoroutine(SetBlendValue(value));
+    }
+
     private bool IsGround()
     {
         return Physics.Raycast(transform.position, Vector3.down, 0.1f, groundLayer);
     }
 
-    IEnumerator DashStart()
+    IEnumerator DashStart(Vector3 dir)
     {
         float elapsedTime = 0;
-        while (elapsedTime < dashTime)
+        while (elapsedTime < characterStat.DashTime)
         {
-            characterController.Move(((transform.forward * dashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);
+            characterController.Move(((dir * characterStat.DashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        isDash = false;
-        isRun = true;
         dashCoroutine = null;
+        playerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
     }
 
     IEnumerator CharacterRotate(Vector3 RotateDir)
@@ -150,7 +141,7 @@ public class PlayerController : MonoBehaviour
         }
         while (angle < targetAngle)
         {
-            float angleSpeed = rotationSpeed * Time.deltaTime;
+            float angleSpeed = characterStat.RotateSpeed * Time.deltaTime;
 
             // 기준점, 회전축, 속도
             transform.RotateAround(transform.position, axis, angleSpeed);

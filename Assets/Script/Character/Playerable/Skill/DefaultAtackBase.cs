@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class DefaultAtackBase : MonoBehaviour
 {
+    public bool IsActionUse { get; set; }
+
+    private PlayerController controller;
+
     private Animator animator;
 
     private bool isCombo;
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        controller = GetComponent<PlayerController>();
     }
     public virtual void DefaultAtackActivate()
     {

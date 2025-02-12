@@ -19,7 +19,7 @@ public static class Utill
         }
         return vector3;
     }
-    public static void DistinctAction(this Action action, Action function)
+    public static void AddUniqueAction(this Action action, Action function)
     {
         action -= function;
         action += function;
