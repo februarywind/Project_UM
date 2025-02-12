@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum StopAction
@@ -8,7 +10,7 @@ public enum StopAction
 
 public class PlayerController : MonoBehaviour
 {
-    public bool IsInput {  get; private set; }
+    public bool IsInput { get; private set; }
 
     [SerializeField] LayerMask groundLayer;
     [SerializeField] PlayerCharacterStat characterStat;
@@ -24,8 +26,11 @@ public class PlayerController : MonoBehaviour
     private Coroutine rotateCoroutine;
     private Coroutine blendCoroutine;
     private Coroutine dashCoroutine;
+    private Coroutine inputCoroutine;
 
     private PlayerFSM playerFSM;
+    public EPlayerState[] ConvertibleStates;
+    private Dictionary<EPlayerState, Action> stateM = new();
 
     private void Awake()
     {
@@ -33,11 +38,17 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
         playerFSM = new(this, characterStat, animator);
+
+
+        stateM.Add(EPlayerState.Idle, IdleHandler);
+        stateM.Add(EPlayerState.Walk, WalkHandler);
+        stateM.Add(EPlayerState.Dash, DashHandler);
     }
 
     private void Update()
     {
         SetMoveDir();
+        ConvertibleStateCheck();
         playerFSM.OnUpdate();
         Gravity();
     }
@@ -73,7 +84,12 @@ public class PlayerController : MonoBehaviour
         // 최종 이동 방향 계산
         InputDir = (camForward * moveZ + camRight * moveX).normalized;
 
-        IsInput = (moveX + moveZ) != 0;
+        if (InputDir != Vector3.zero)
+        {
+            if (inputCoroutine != null)
+                StopCoroutine(inputCoroutine);
+            inputCoroutine = StartCoroutine(InputCheck(10));
+        }
     }
     public void PlayerMove(float speed)
     {
@@ -81,7 +97,17 @@ public class PlayerController : MonoBehaviour
         PlayerRotate(InputDir);
     }
 
-    public void DashHandler()
+    private void IdleHandler()
+    {
+        if (!IsInput)
+            playerFSM.ChangeState(EPlayerState.Idle);
+    }
+    private void WalkHandler()
+    {
+        if (IsInput)
+            playerFSM.ChangeState(EPlayerState.Walk);
+    }
+    private void DashHandler()
     {
         if (!Input.GetKeyDown(KeyCode.LeftShift) || dashCoroutine != null)
             return;
@@ -176,5 +202,24 @@ public class PlayerController : MonoBehaviour
         }
         animator.SetFloat("Speed", value);
         blendCoroutine = null;
+    }
+
+    // 입력이 없어도 n프레임 동안 상태가 유지
+    IEnumerator InputCheck(int frame)
+    {
+        IsInput = true;
+        for (int i = 0; i < frame; i++)
+        {
+            yield return null;
+        }
+        IsInput = false;
+    }
+
+    private void ConvertibleStateCheck()
+    {
+        foreach (var item in ConvertibleStates)
+        {
+            stateM[item].Invoke();
+        }
     }
 }

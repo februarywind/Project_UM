@@ -10,6 +10,7 @@ public class PlayerIdleState : PlayerStateBase
     public override void OnStateEnter()
     {
         controller.MoveAnimationPlay(0);
+        controller.ConvertibleStates = new EPlayerState[2] {EPlayerState.Walk, EPlayerState.Dash};
     }
 
     public override void OnStateExit()
@@ -19,9 +20,6 @@ public class PlayerIdleState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        controller.DashHandler();
         controller.PlayerMove(0);
-        if (controller.IsInput)
-            playerFSM.ChangeState(EPlayerState.Walk);
     }
 }
