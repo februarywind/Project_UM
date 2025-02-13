@@ -17,6 +17,7 @@ public class MonsterBase : MonoBehaviour, IDamagable
         {
             Dead();
         }
+        DamagePopUpManager.instance.ShowDamagePopUp(transform.position, $"{damage}", Color.white);
     }
     protected virtual void Dead()
     {
