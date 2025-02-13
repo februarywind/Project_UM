@@ -44,6 +44,16 @@ public class PlayerController : MonoBehaviour
         stateM.Add(EPlayerState.Walk, WalkHandler);
         stateM.Add(EPlayerState.Dash, DashHandler);
         stateM.Add(EPlayerState.Atack, AtackHandler);
+        stateM.Add(EPlayerState.Jump, JumpHandler);
+    }
+
+    private void JumpHandler()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && IsGround())
+        {
+            gravityVelocity = characterStat.JumpHeight;
+            playerFSM.ChangeState(EPlayerState.Jump);
+        }
     }
 
     private void Update()
@@ -63,12 +73,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             gravityVelocity += characterStat.Gravity * Time.deltaTime;
-        }
-
-        // 캐릭터 컨트롤러는 바닥을 잘 인식 못해서 점프가 잘 안먹힘 Ray추가
-        if (Input.GetKeyDown(KeyCode.Space) && (characterController.isGrounded || IsGround()))
-        {
-            gravityVelocity = characterStat.JumpHeight;
         }
     }
 
@@ -142,9 +146,9 @@ public class PlayerController : MonoBehaviour
         blendCoroutine = StartCoroutine(SetBlendValue(value));
     }
 
-    private bool IsGround()
+    public bool IsGround()
     {
-        return Physics.Raycast(transform.position, Vector3.down, 0.1f, groundLayer);
+        return characterController.isGrounded || Physics.Raycast(transform.position, Vector3.down, 0.1f, groundLayer);
     }
 
     IEnumerator DashStart(Vector3 dir)
@@ -230,7 +234,7 @@ public class PlayerController : MonoBehaviour
     {
         if (ConvertibleStates[0] == EPlayerState.Stop)
             return;
-        
+
         foreach (var item in ConvertibleStates)
         {
             stateM[item].Invoke();

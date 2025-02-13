@@ -14,7 +14,6 @@ public class PlayerWalkState : PlayerStateBase
 
     public override void OnStateExit()
     {
-        Debug.Log("walkexit");
     }
 
     public override void OnStateUpdate()

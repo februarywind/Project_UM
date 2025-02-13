@@ -14,7 +14,6 @@ public class PlayerIdleState : PlayerStateBase
 
     public override void OnStateExit()
     {
-        Debug.Log("IdleExit");
     }
 
     public override void OnStateUpdate()
