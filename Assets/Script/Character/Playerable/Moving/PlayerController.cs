@@ -43,6 +43,7 @@ public class PlayerController : MonoBehaviour
         stateM.Add(EPlayerState.Idle, IdleHandler);
         stateM.Add(EPlayerState.Walk, WalkHandler);
         stateM.Add(EPlayerState.Dash, DashHandler);
+        stateM.Add(EPlayerState.Atack, AtackHandler);
     }
 
     private void Update()
@@ -115,6 +116,14 @@ public class PlayerController : MonoBehaviour
         dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
     }
 
+    private void AtackHandler()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            playerFSM.ChangeState(EPlayerState.Atack);
+        }
+    }
+
     private void PlayerRotate(Vector3 moveDir)
     {
         // 캐릭터 회전 (움직이는 방향을 바라보도록)
@@ -128,8 +137,9 @@ public class PlayerController : MonoBehaviour
     public void MoveAnimationPlay(float value)
     {
         // 애니메이션 설정
-        if (blendCoroutine == null)
-            blendCoroutine = StartCoroutine(SetBlendValue(value));
+        if (blendCoroutine != null)
+            StopCoroutine(blendCoroutine);
+        blendCoroutine = StartCoroutine(SetBlendValue(value));
     }
 
     private bool IsGround()
@@ -140,6 +150,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator DashStart(Vector3 dir)
     {
         float elapsedTime = 0;
+        PlayerRotate(dir);
         while (elapsedTime < characterStat.DashTime)
         {
             characterController.Move(((dir * characterStat.DashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);
@@ -217,9 +228,17 @@ public class PlayerController : MonoBehaviour
 
     private void ConvertibleStateCheck()
     {
+        if (ConvertibleStates[0] == EPlayerState.Stop)
+            return;
+        
         foreach (var item in ConvertibleStates)
         {
             stateM[item].Invoke();
         }
+    }
+
+    private void ComboEnd()
+    {
+        playerFSM.ChangeState(EPlayerState.Idle);
     }
 }

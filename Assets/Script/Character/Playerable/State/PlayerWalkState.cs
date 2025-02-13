@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerWalkState : PlayerStateBase
 {
-    public PlayerWalkState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator) : base(controller, characterStat, playerFSM, animator)
+    public PlayerWalkState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator, EPlayerState[] convertibleStates) : base(controller, characterStat, playerFSM, animator, convertibleStates)
     {
     }
 
     public override void OnStateEnter()
     {
         controller.MoveAnimationPlay(1);
-        controller.ConvertibleStates = new EPlayerState[2] { EPlayerState.Idle, EPlayerState.Dash };
+        controller.ConvertibleStates = convertibleStates;
     }
 
     public override void OnStateExit()

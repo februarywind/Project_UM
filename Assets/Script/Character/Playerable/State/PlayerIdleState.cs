@@ -1,16 +1,15 @@
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class PlayerIdleState : PlayerStateBase
 {
-    public PlayerIdleState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator) : base(controller, characterStat, playerFSM, animator)
+    public PlayerIdleState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator, EPlayerState[] convertibleStates) : base(controller, characterStat, playerFSM, animator, convertibleStates)
     {
     }
 
     public override void OnStateEnter()
     {
         controller.MoveAnimationPlay(0);
-        controller.ConvertibleStates = new EPlayerState[2] {EPlayerState.Walk, EPlayerState.Dash};
+        controller.ConvertibleStates = convertibleStates;
     }
 
     public override void OnStateExit()
