@@ -14,21 +14,22 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] LayerMask groundLayer;
     [SerializeField] PlayerCharacterStat characterStat;
+    [SerializeField] BattleSkillBase battleSkill;
 
-    private Vector3 InputDir;
+    public Vector3 InputDir { get; private set; }
 
     private float gravityVelocity;
 
     private Camera cam;
     private Animator animator;
-    private CharacterController characterController;
+    public CharacterController characterController {  get; private set; }
 
     private Coroutine rotateCoroutine;
     private Coroutine blendCoroutine;
     private Coroutine dashCoroutine;
     private Coroutine inputCoroutine;
 
-    private PlayerFSM playerFSM;
+    public PlayerFSM PlayerFSM { get; private set; }
     public EPlayerState[] ConvertibleStates;
     private Dictionary<EPlayerState, Action> stateM = new();
 
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-        playerFSM = new(this, characterStat, animator);
+        PlayerFSM = new(this, characterStat, animator, battleSkill);
 
 
         stateM.Add(EPlayerState.Idle, IdleHandler);
@@ -45,6 +46,15 @@ public class PlayerController : MonoBehaviour
         stateM.Add(EPlayerState.Dash, DashHandler);
         stateM.Add(EPlayerState.Atack, AtackHandler);
         stateM.Add(EPlayerState.Jump, JumpHandler);
+        stateM.Add(EPlayerState.BattleSkill, BattleSkillHandler);
+    }
+
+    private void BattleSkillHandler()
+    {
+        if (Input.GetKeyDown(KeyCode.E) && !battleSkill.IsCoolTime)
+        {
+            PlayerFSM.ChangeState(EPlayerState.BattleSkill);
+        }
     }
 
     private void JumpHandler()
@@ -52,7 +62,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {
             gravityVelocity = characterStat.JumpHeight;
-            playerFSM.ChangeState(EPlayerState.Jump);
+            PlayerFSM.ChangeState(EPlayerState.Jump);
         }
     }
 
@@ -60,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         SetMoveDir();
         ConvertibleStateCheck();
-        playerFSM.OnUpdate();
+        PlayerFSM.OnUpdate();
         Gravity();
     }
     private void Gravity()
@@ -105,18 +115,18 @@ public class PlayerController : MonoBehaviour
     private void IdleHandler()
     {
         if (!IsInput)
-            playerFSM.ChangeState(EPlayerState.Idle);
+            PlayerFSM.ChangeState(EPlayerState.Idle);
     }
     private void WalkHandler()
     {
         if (IsInput)
-            playerFSM.ChangeState(EPlayerState.Walk);
+            PlayerFSM.ChangeState(EPlayerState.Walk);
     }
     private void DashHandler()
     {
         if (!Input.GetKeyDown(KeyCode.LeftShift) || dashCoroutine != null)
             return;
-        playerFSM.ChangeState(EPlayerState.Dash);
+        PlayerFSM.ChangeState(EPlayerState.Dash);
         dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
     }
 
@@ -124,7 +134,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            playerFSM.ChangeState(EPlayerState.Atack);
+            PlayerFSM.ChangeState(EPlayerState.Atack);
         }
     }
 
@@ -163,7 +173,7 @@ public class PlayerController : MonoBehaviour
         }
 
         dashCoroutine = null;
-        playerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
+        PlayerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
     }
 
     IEnumerator CharacterRotate(Vector3 RotateDir)
@@ -243,6 +253,6 @@ public class PlayerController : MonoBehaviour
 
     private void ComboEnd()
     {
-        playerFSM.ChangeState(EPlayerState.Idle);
+        PlayerFSM.ChangeState(EPlayerState.Idle);
     }
 }

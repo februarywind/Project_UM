@@ -1,5 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+public enum RemoveDir
+{
+    X, Y, Z
+}
 
 public static class Utill
 {
@@ -24,8 +29,15 @@ public static class Utill
         action -= function;
         action += function;
     }
-}
-public enum RemoveDir
-{
-    X, Y, Z
+
+    private static Dictionary<float, WaitForSeconds> delayMap = new();
+    public static WaitForSeconds GetDelay(float delay)
+    {
+        if (delayMap.ContainsKey(delay))
+        {
+            return delayMap[delay];
+        }
+        delayMap.Add(delay, new WaitForSeconds(delay));
+        return delayMap[delay];
+    }
 }

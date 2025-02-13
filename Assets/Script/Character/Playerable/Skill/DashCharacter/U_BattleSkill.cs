@@ -1,37 +1,42 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
 public class U_BattleSkill : BattleSkillBase
 {
-    [SerializeField] float dashDagame;
-    [SerializeField] float dashSpeed;
-    [SerializeField] float dashTime;
-
-    private PlayerController playerContoller;
-    private CharacterController characterController;
-
-    private void Awake()
-    {
-        playerContoller = GetComponent<PlayerController>();
-        characterController = GetComponent<CharacterController>();
-    }
+    [SerializeField] float dagame;
+    [SerializeField] float range;
+    [SerializeField] float delay;
+    [SerializeField] LayerMask excludeLayer;
 
     public override void BattleSkillActivate()
     {
         StartCoroutine(DashSkill());
-        Debug.Log(1212);
     }
 
     IEnumerator DashSkill()
     {
-        float d = 0;
+        Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
 
-        while (d < dashTime)
+        if (Physics.SphereCast(transform.position, 1, skillDir, out RaycastHit hit, range, excludeLayer))
         {
-            characterController.Move((transform.forward * dashSpeed) * Time.deltaTime);
-            d += 1 / dashTime * Time.deltaTime;
-            yield return null;
+            hit.transform.GetComponent<IDamagable>().TakeDamage(dagame);
         }
+
+        playerController.characterController.excludeLayers += excludeLayer;
+        playerController.characterController.Move(skillDir * range);
+        playerController.characterController.excludeLayers -= excludeLayer;
+        yield return Utill.GetDelay(delay);
+        playerFSM.ChangeState(EPlayerState.Idle);
+
+        SkillCoolTime();
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    // 시작점 원 (SphereCast의 초기 위치)
+    //    Gizmos.DrawWireSphere(transform.position, 1);
+
+    //    // 끝점 원 (SphereCast가 도달할 위치)
+    //    Gizmos.DrawWireSphere(transform.position + transform.forward * range, 1);
+    //}
 }
