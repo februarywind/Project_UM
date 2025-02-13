@@ -10,6 +10,8 @@ public class BattleSkillBase : MonoBehaviour
 
     [SerializeField] float coolTime;
 
+    private Coroutine coolCoroutine;
+
     private void Start()
     {
         playerController = GetComponent<PlayerController>();
@@ -22,7 +24,13 @@ public class BattleSkillBase : MonoBehaviour
 
     public virtual void SkillCoolTime() 
     {
-        StartCoroutine(CoolDown());
+        coolCoroutine = StartCoroutine(CoolDown());
+    }
+
+    public void CoolTimeReset()
+    {
+        StopCoroutine(coolCoroutine);
+        IsCoolTime = false;
     }
 
     IEnumerator CoolDown()

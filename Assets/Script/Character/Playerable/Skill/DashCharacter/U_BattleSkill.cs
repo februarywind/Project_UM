@@ -17,7 +17,7 @@ public class U_BattleSkill : BattleSkillBase
     {
         Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
 
-        if (Physics.SphereCast(transform.position, 1, skillDir, out RaycastHit hit, range, excludeLayer))
+        if (Physics.SphereCast(transform.position - skillDir, 1, skillDir, out RaycastHit hit, range, excludeLayer))
         {
             hit.transform.GetComponent<IDamagable>().TakeDamage(dagame);
         }
@@ -31,12 +31,12 @@ public class U_BattleSkill : BattleSkillBase
         SkillCoolTime();
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    // 시작점 원 (SphereCast의 초기 위치)
-    //    Gizmos.DrawWireSphere(transform.position, 1);
+    private void OnDrawGizmos()
+    {
+        // 시작점 원 (SphereCast의 초기 위치)
+        Gizmos.DrawWireSphere(transform.position, 1);
 
-    //    // 끝점 원 (SphereCast가 도달할 위치)
-    //    Gizmos.DrawWireSphere(transform.position + transform.forward * range, 1);
-    //}
+        // 끝점 원 (SphereCast가 도달할 위치)
+        Gizmos.DrawWireSphere(transform.position + transform.forward * range, 1);
+    }
 }
