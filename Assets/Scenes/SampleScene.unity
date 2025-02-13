@@ -901,7 +901,6 @@ GameObject:
   - component: {fileID: 1344932613}
   - component: {fileID: 1344932612}
   - component: {fileID: 1344932616}
-  - component: {fileID: 1344932617}
   m_Layer: 3
   m_Name: Monster
   m_TagString: Untagged
@@ -1014,31 +1013,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHp: 50
   curHp: 0
---- !u!143 &1344932617
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1344932611}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1401473034
 GameObject:
   m_ObjectHideFlags: 0
@@ -1307,6 +1281,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToonModel
       objectReference: {fileID: 0}
+    - target: {fileID: 5364256642849020257, guid: c4ce6db848249dd4e93160c22492349a, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6535563546471815008, guid: c4ce6db848249dd4e93160c22492349a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1404,7 +1382,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4401340365611497226, guid: b4e2042db9e7e4c47b596f988cca8f54, type: 3}
+    - {fileID: 1027423509035980739, guid: b4e2042db9e7e4c47b596f988cca8f54, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
