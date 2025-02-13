@@ -32,8 +32,9 @@ public class PlayerController : MonoBehaviour
 
     // 스킬 및 스탯
     public PlayerCharacterStat CharacterStat => characterStat;
-    [SerializeField] private BattleSkillBase battleSkill;
-    [SerializeField] private PlayerCharacterStat characterStat;
+    [SerializeField] BattleSkillBase battleSkill;
+    [SerializeField] UltimateSkillBase ultimateSkill;
+    [SerializeField] PlayerCharacterStat characterStat;
 
     // 코루틴 관리
     private Coroutine rotateCoroutine;
@@ -46,7 +47,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         Animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-        PlayerFSM = new(this, characterStat, Animator, battleSkill);
+        PlayerFSM = new(this, characterStat, Animator, battleSkill, ultimateSkill);
 
         stateHandlerDic.Add(EPlayerState.Idle, IdleHandler);
         stateHandlerDic.Add(EPlayerState.Walk, WalkHandler);
@@ -54,6 +55,15 @@ public class PlayerController : MonoBehaviour
         stateHandlerDic.Add(EPlayerState.Atack, AtackHandler);
         stateHandlerDic.Add(EPlayerState.Jump, JumpHandler);
         stateHandlerDic.Add(EPlayerState.BattleSkill, BattleSkillHandler);
+        stateHandlerDic.Add(EPlayerState.UltimateSkill, UltimateSkillHandler);
+    }
+
+    private void UltimateSkillHandler()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !ultimateSkill.IsCoolTime)
+        {
+            PlayerFSM.ChangeState(EPlayerState.UltimateSkill);
+        }
     }
 
     private void Update()

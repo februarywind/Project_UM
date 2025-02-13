@@ -2,20 +2,25 @@ using UnityEngine;
 
 public class PlayerUltimateSkillState : PlayerStateBase
 {
-    public PlayerUltimateSkillState(PlayerController controller, EPlayerState[] convertibleStates) : base(controller, convertibleStates){}
+    private UltimateSkillBase ultimateSkill;
+    public PlayerUltimateSkillState(PlayerController controller, UltimateSkillBase ultimateSkill, EPlayerState[] convertibleStates) : base(controller, convertibleStates) 
+    {
+        this.ultimateSkill = ultimateSkill;
+    }
 
     public override void OnStateEnter()
     {
-        throw new System.NotImplementedException();
+        Debug.Log(1111111);
+        controller.ConvertibleStates = convertibleStates;
+        ultimateSkill.UltimateSkillActivate();
     }
 
     public override void OnStateExit()
     {
-        throw new System.NotImplementedException();
+
     }
 
     public override void OnStateUpdate()
     {
-        throw new System.NotImplementedException();
     }
 }
