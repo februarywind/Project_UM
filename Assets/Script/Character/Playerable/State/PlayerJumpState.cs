@@ -1,9 +1,6 @@
-using System.Collections;
-using UnityEngine;
-
 public class PlayerJumpState : PlayerStateBase
 {
-    public PlayerJumpState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator, EPlayerState[] convertibleStates) : base(controller, characterStat, playerFSM, animator, convertibleStates){}
+    public PlayerJumpState(PlayerController controller, EPlayerState[] convertibleStates) : base(controller, convertibleStates) { }
     private bool isAir;
     public override void OnStateEnter()
     {
@@ -18,11 +15,11 @@ public class PlayerJumpState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        controller.PlayerMove(playerFSM.BeforeState == EPlayerState.Run ? characterStat.RunSpeed : characterStat.WalkSpeed);
+        controller.PlayerMove(controller.PlayerFSM.BeforeState == EPlayerState.Run ? controller.CharacterStat.RunSpeed : controller.CharacterStat.WalkSpeed);
 
-        if (!isAir) 
+        if (!isAir)
             isAir = !controller.IsGround();
         if (isAir && controller.IsGround())
-            playerFSM.ChangeState(playerFSM.BeforeState == EPlayerState.Run ? EPlayerState.Run : EPlayerState.Idle);
+            controller.PlayerFSM.ChangeState(controller.PlayerFSM.BeforeState == EPlayerState.Run ? EPlayerState.Run : EPlayerState.Idle);
     }
 }

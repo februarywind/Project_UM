@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class PlayerAtackState : PlayerStateBase
 {
-    public PlayerAtackState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator, EPlayerState[] convertibleStates) : base(controller, characterStat, playerFSM, animator, convertibleStates){}
 
     private int combo = 0;
+
+    public PlayerAtackState(PlayerController controller, EPlayerState[] convertibleStates) : base(controller, convertibleStates){}
+
     public override void OnStateEnter()
     {
         controller.ConvertibleStates = convertibleStates;
-        animator.SetTrigger("Atack");
+        controller.Animator.SetTrigger("Atack");
     }
 
     public override void OnStateExit()
@@ -20,7 +22,7 @@ public class PlayerAtackState : PlayerStateBase
     {
         if (Input.GetMouseButtonDown(0))
         {
-            animator.SetInteger("Combo", ++combo);
+            controller.Animator.SetInteger("Combo", ++combo);
         }
     }
 }

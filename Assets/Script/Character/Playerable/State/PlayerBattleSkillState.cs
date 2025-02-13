@@ -1,9 +1,8 @@
-using UnityEngine;
-
 public class PlayerBattleSkillState : PlayerStateBase
 {
     private BattleSkillBase battleSkill;
-    public PlayerBattleSkillState(PlayerController controller, PlayerCharacterStat characterStat, PlayerFSM playerFSM, Animator animator, EPlayerState[] convertibleStates, BattleSkillBase battleSkill) : base(controller, characterStat, playerFSM, animator, convertibleStates)
+
+    public PlayerBattleSkillState(PlayerController controller, BattleSkillBase battleSkill, EPlayerState[] convertibleStates) : base(controller, convertibleStates)
     {
         this.battleSkill = battleSkill;
     }
