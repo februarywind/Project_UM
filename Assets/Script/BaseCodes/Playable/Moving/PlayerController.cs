@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
 
     // 캐릭터 컨트롤러 및 카메라
     public CharacterController characterController { get; private set; }
+    public PlayableCharacterChange CharacterChange => characterChange;
+    private PlayableCharacterChange characterChange;
     private Camera cam;
 
     // 상태 관리
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         Animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+        characterChange = GetComponentInParent<PlayableCharacterChange>();
         PlayerFSM = new(this, movingStat, Animator, battleSkill, ultimateSkill);
 
         stateHandlerDic.Add(EPlayerState.Idle, IdleHandler);
@@ -54,6 +57,15 @@ public class PlayerController : MonoBehaviour
         stateHandlerDic.Add(EPlayerState.Jump, JumpHandler);
         stateHandlerDic.Add(EPlayerState.BattleSkill, BattleSkillHandler);
         stateHandlerDic.Add(EPlayerState.UltimateSkill, UltimateSkillHandler);
+        stateHandlerDic.Add(EPlayerState.Change, ChangeHandler);
+    }
+
+    private void ChangeHandler()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            PlayerFSM.ChangeState(EPlayerState.Change);
+        }
     }
 
     private void UltimateSkillHandler()
