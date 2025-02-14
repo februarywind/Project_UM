@@ -1406,6 +1406,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToonModel
       objectReference: {fileID: 0}
+    - target: {fileID: 5364256642849020257, guid: c4ce6db848249dd4e93160c22492349a, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 459940763bf3d7b4e987c1399586c3d8, type: 2}
     - target: {fileID: 6535563546471815008, guid: c4ce6db848249dd4e93160c22492349a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.68
