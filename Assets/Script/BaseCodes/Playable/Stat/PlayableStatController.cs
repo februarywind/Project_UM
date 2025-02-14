@@ -8,6 +8,9 @@ public class PlayableStatController : MonoBehaviour, IDamagable
 
     private void Awake()
     {
+        // 여기서 데이터 초기화를 한다.
+
+
         stat.OnChangeCurHp += Stat_OnChangeCurHp;
     }
 
