@@ -19,13 +19,11 @@ public class M_BattleSkill : BattleSkillBase
     IEnumerator HealSkill()
     {
         yield return Utill.GetDelay(skillData.Delay);
-        Array.Fill(hits, new RaycastHit());
-        Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, skillData.Range, skillData.TargetLayer);
-        foreach (RaycastHit hit in hits)
+        int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, skillData.Range, skillData.TargetLayer);
+        for (int i = 0; i < indexLength; i++)
         {
-            if (hit.collider == null) continue;
-            hit.transform.GetComponent<PlayerController>().StatController.Stat.CurHp += skillData.Damage;
-            DamagePopUpManager.instance.ShowDamagePopUp(hit.transform.position, $"{skillData.Damage}", Color.green);
+            hits[i].transform.GetComponent<PlayerController>().StatController.Stat.CurHp += skillData.Damage;
+            DamagePopUpManager.instance.ShowDamagePopUp(hits[i].transform.position, $"{skillData.Damage}", Color.green);
         }
         yield return Utill.GetDelay(skillData.Delay);
         playerFSM.ChangeState(EPlayerState.Idle);

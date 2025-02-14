@@ -18,14 +18,12 @@ public class U_UltimateSkill : UltimateSkillBase
 
     IEnumerator U_Ultimate()
     {
-        Array.Fill(hits, new RaycastHit());
-        Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, 1, skillData.TargetLayer);
+        int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, 1, skillData.TargetLayer);
         for (int i = 0; i < skillData.HitCount; i++)
         {
-            foreach (var item in hits)
+            for (int j = 0; j < indexLength; j++)
             {
-                if (item.collider == null) continue;
-                item.transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
+                hits[j].transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
             }
             yield return Utill.GetDelay(0.1f);
         }

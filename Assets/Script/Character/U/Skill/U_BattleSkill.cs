@@ -18,14 +18,11 @@ public class U_BattleSkill : BattleSkillBase
 
     IEnumerator DashSkill()
     {
-        Array.Fill(hits, new RaycastHit());
         Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
-        Physics.SphereCastNonAlloc(transform.position, skillData.Radius, skillDir, hits, skillData.Range, skillData.TargetLayer);
-
-        foreach (RaycastHit hit in hits)
+        int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, skillDir, hits, skillData.Range, skillData.TargetLayer);
+        for (int i = 0; i < indexLength; i++)
         {
-            if (hit.collider == null) continue;
-            hit.transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
+            hits[i].transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
         }
 
         playerController.characterController.excludeLayers += skillData.TargetLayer;
