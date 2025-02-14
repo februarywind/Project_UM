@@ -31,7 +31,7 @@ public class U_BattleSkill : BattleSkillBase
         foreach (RaycastHit hit in hits)
         {
             if (hit.collider == null) continue;
-            hit.transform.GetComponent<IDamagable>().TakeDamage(damage);
+            hit.transform.GetComponent<IDamagable>().TakeDamage(damage, EAtackElement.Electric);
         }
 
         playerController.characterController.excludeLayers += excludeLayer;

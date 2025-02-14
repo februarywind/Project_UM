@@ -4,6 +4,7 @@ public class MeleeAtackBase : MonoBehaviour
 {
     [SerializeField] MeleeAtackData meleeAtackData;
 
+    // 애니메이션 이벤트
     private void MeleeAtack(int index)
     {
         Attack(meleeAtackData.MeleeDatas[index]);
@@ -30,7 +31,7 @@ public class MeleeAtackBase : MonoBehaviour
             // 0.5를 곱해 angle의 절반만큼의 값과 비교한다.
             if (targetAngle > meleeData.Angle * 0.5f)
                 continue;
-            col.GetComponent<IDamagable>().TakeDamage(meleeData.Damage);
+            col.GetComponent<IDamagable>().TakeDamage(meleeData.Damage, EAtackElement.Normal);
         }
     }
 

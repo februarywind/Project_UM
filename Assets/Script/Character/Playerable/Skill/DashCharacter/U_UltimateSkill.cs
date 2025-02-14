@@ -31,7 +31,7 @@ public class U_UltimateSkill : UltimateSkillBase
             foreach (var item in hits)
             {
                 if (item.collider == null) continue;
-                item.transform.GetComponent<IDamagable>().TakeDamage(damage);
+                item.transform.GetComponent<IDamagable>().TakeDamage(damage, EAtackElement.Electric);
             }
             yield return Utill.GetDelay(0.1f);
         }
