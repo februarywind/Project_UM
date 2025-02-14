@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class U_UltimateSkill : UltimateSkillBase
 {
-    [SerializeField] int hitCount;
-    [SerializeField] float damage;
-    [SerializeField] float radius;
-    [SerializeField] LayerMask targetLayer;
-    [SerializeField] int maxTarget;
-
     private RaycastHit[] hits;
 
     private void Awake()
     {
-        hits = new RaycastHit[maxTarget];
+        hits = new RaycastHit[skillData.MaxTarget];
     }
 
     public override void UltimateSkillActivate()
@@ -25,13 +19,13 @@ public class U_UltimateSkill : UltimateSkillBase
     IEnumerator U_Ultimate()
     {
         Array.Fill(hits, new RaycastHit());
-        Physics.SphereCastNonAlloc(transform.position, radius, Vector3.up, hits, 1, targetLayer);
-        for (int i = 0; i < hitCount; i++)
+        Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, 1, skillData.TargetLayer);
+        for (int i = 0; i < skillData.HitCount; i++)
         {
             foreach (var item in hits)
             {
                 if (item.collider == null) continue;
-                item.transform.GetComponent<IDamagable>().TakeDamage(damage, EAtackElement.Electric);
+                item.transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
             }
             yield return Utill.GetDelay(0.1f);
         }

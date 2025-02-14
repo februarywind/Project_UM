@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class BattleSkillBase : MonoBehaviour
 {
+    [SerializeField] protected PlayerSkillData skillData;
+
     public bool IsCoolTime { get; private set; }
 
     protected PlayerFSM playerFSM;
     protected PlayerController playerController;
-
-    [SerializeField] float coolTime;
 
     private Coroutine coolCoroutine;
 
@@ -36,7 +36,7 @@ public class BattleSkillBase : MonoBehaviour
     IEnumerator CoolDown()
     {
         IsCoolTime = true;
-        yield return Utill.GetDelay(coolTime);
+        yield return Utill.GetDelay(skillData.CoolTime);
         IsCoolTime = false;
     }
 }

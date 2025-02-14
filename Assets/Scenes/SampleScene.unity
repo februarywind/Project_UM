@@ -1011,7 +1011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0d78351bf373c4bb451f1196e1e631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 50
+  maxHp: 5000
   curHp: 0
 --- !u!1 &1401473034
 GameObject:
@@ -1232,7 +1232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0d78351bf373c4bb451f1196e1e631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 50
+  maxHp: 5000
   curHp: 0
 --- !u!136 &1735903500
 CapsuleCollider:
@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f0d78351bf373c4bb451f1196e1e631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHp: 50
+  maxHp: 5000
   curHp: 0
 --- !u!136 &2124950351
 CapsuleCollider:
