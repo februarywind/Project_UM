@@ -1,12 +1,21 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class U_BattleSkill : BattleSkillBase
 {
-    [SerializeField] float dagame;
+    [SerializeField] float damage;
+    [SerializeField] float radius;
     [SerializeField] float range;
     [SerializeField] float delay;
     [SerializeField] LayerMask excludeLayer;
+    [SerializeField] int maxTarget;
+    private RaycastHit[] hits;
+
+    private void Awake()
+    {
+        hits = new RaycastHit[maxTarget];
+    }
 
     public override void BattleSkillActivate()
     {
@@ -15,17 +24,22 @@ public class U_BattleSkill : BattleSkillBase
 
     IEnumerator DashSkill()
     {
+        Array.Fill(hits, new RaycastHit());
         Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
+        Physics.SphereCastNonAlloc(transform.position, radius, skillDir, hits, range, excludeLayer);
 
-        if (Physics.SphereCast(transform.position - skillDir, 1, skillDir, out RaycastHit hit, range, excludeLayer))
+        foreach (RaycastHit hit in hits)
         {
-            hit.transform.GetComponent<IDamagable>().TakeDamage(dagame);
+            if (hit.collider == null) continue;
+            hit.transform.GetComponent<IDamagable>().TakeDamage(damage);
         }
 
         playerController.characterController.excludeLayers += excludeLayer;
         playerController.characterController.Move(skillDir * range);
         playerController.characterController.excludeLayers -= excludeLayer;
+
         yield return Utill.GetDelay(delay);
+
         playerFSM.ChangeState(EPlayerState.Idle);
 
         SkillCoolTime();
@@ -34,9 +48,9 @@ public class U_BattleSkill : BattleSkillBase
     private void OnDrawGizmos()
     {
         // 시작점 원 (SphereCast의 초기 위치)
-        Gizmos.DrawWireSphere(transform.position, 1);
+        Gizmos.DrawWireSphere(transform.position, radius);
 
         // 끝점 원 (SphereCast가 도달할 위치)
-        Gizmos.DrawWireSphere(transform.position + transform.forward * range, 1);
+        Gizmos.DrawWireSphere(transform.position + transform.forward * range, radius);
     }
 }
