@@ -31,10 +31,10 @@ public class PlayerController : MonoBehaviour
     private float gravityVelocity;
 
     // 스킬 및 스탯
-    public PlayerCharacterStat CharacterStat => characterStat;
+    public PlayerMovingStat CharacterStat => characterStat;
     [SerializeField] BattleSkillBase battleSkill;
     [SerializeField] UltimateSkillBase ultimateSkill;
-    [SerializeField] PlayerCharacterStat characterStat;
+    [SerializeField] PlayerMovingStat characterStat;
 
     // 코루틴 관리
     private Coroutine rotateCoroutine;

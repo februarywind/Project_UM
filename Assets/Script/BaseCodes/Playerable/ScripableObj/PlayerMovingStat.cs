@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerCharacterStat", menuName = "Scriptable Objects/PlayerCharacterStat")]
-public class PlayerCharacterStat : ScriptableObject
+public class PlayerMovingStat : ScriptableObject
 {
     [SerializeField] float walkSpeed;
     public float WalkSpeed => walkSpeed;

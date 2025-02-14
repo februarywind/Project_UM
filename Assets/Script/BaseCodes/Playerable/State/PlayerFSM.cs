@@ -11,7 +11,7 @@ public class PlayerFSM
     private EPlayerState curEState = EPlayerState.Stop;
     public EPlayerState BeforeState;
     private PlayerStateBase[] playerStates = new PlayerStateBase[(int)EPlayerState.Size];
-    public PlayerFSM(PlayerController controller, PlayerCharacterStat characterStat, Animator animator, BattleSkillBase battleSkill, UltimateSkillBase ultimateSkill)
+    public PlayerFSM(PlayerController controller, PlayerMovingStat characterStat, Animator animator, BattleSkillBase battleSkill, UltimateSkillBase ultimateSkill)
     {
         playerStates[(int)EPlayerState.Idle] = new PlayerIdleState(controller, new EPlayerState[] { EPlayerState.Walk, EPlayerState.Dash, EPlayerState.Atack, EPlayerState.Jump, EPlayerState.BattleSkill, EPlayerState.UltimateSkill });
         playerStates[(int)EPlayerState.Walk] = new PlayerWalkState(controller, new EPlayerState[] { EPlayerState.Idle, EPlayerState.Dash, EPlayerState.Atack, EPlayerState.Jump, EPlayerState.BattleSkill, EPlayerState.UltimateSkill });
