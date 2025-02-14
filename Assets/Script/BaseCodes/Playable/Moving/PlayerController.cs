@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
         if (!IsInput)
             PlayerFSM.ChangeState(EPlayerState.Idle);
     }
-    
+
     private void WalkHandler()
     {
         if (IsInput)
             PlayerFSM.ChangeState(EPlayerState.Walk);
     }
-    
+
     private void DashHandler()
     {
         if (!Input.GetKeyDown(KeyCode.LeftShift) || dashCoroutine != null)
@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
         PlayerFSM.ChangeState(EPlayerState.Dash);
         dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
     }
-    
+
     private void JumpHandler()
     {
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
             PlayerFSM.ChangeState(EPlayerState.Jump);
         }
     }
-    
+
     private void AtackHandler()
     {
         if (Input.GetMouseButtonDown(0))
@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
             PlayerFSM.ChangeState(EPlayerState.Atack);
         }
     }
-    
+
     private void BattleSkillHandler()
     {
         if (Input.GetKeyDown(KeyCode.E) && !battleSkill.IsCoolTime)
@@ -153,13 +153,13 @@ public class PlayerController : MonoBehaviour
             PlayerFSM.ChangeState(EPlayerState.BattleSkill);
         }
     }
-    
+
     public void PlayerMove(float speed)
     {
         characterController.Move(((InputDir * speed) + Vector3.up * gravityVelocity) * Time.deltaTime);
         PlayerRotate(InputDir);
     }
-    
+
     private void PlayerRotate(Vector3 moveDir)
     {
         // 캐릭터 회전 (움직이는 방향을 바라보도록)
@@ -169,7 +169,7 @@ public class PlayerController : MonoBehaviour
         }
         rotateCoroutine = StartCoroutine(CharacterRotate(moveDir));
     }
-    
+
     private void Gravity()
     {
         // 공중에 있을 때 아래로 이동시킴, 땅에 닿으면 초기화
@@ -182,7 +182,7 @@ public class PlayerController : MonoBehaviour
             gravityVelocity += movingStat.Gravity * Time.deltaTime;
         }
     }
-    
+
     public void MoveAnimationPlay(float value)
     {
         // 애니메이션 설정
@@ -190,12 +190,12 @@ public class PlayerController : MonoBehaviour
             StopCoroutine(blendCoroutine);
         blendCoroutine = StartCoroutine(SetBlendValue(value));
     }
-    
+
     public bool IsGround()
     {
         return characterController.isGrounded || Physics.Raycast(transform.position, Vector3.down, 0.1f, groundLayer);
     }
-    
+
     IEnumerator DashStart(Vector3 dir)
     {
         float elapsedTime = 0;
@@ -210,7 +210,7 @@ public class PlayerController : MonoBehaviour
         dashCoroutine = null;
         PlayerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
     }
-    
+
     IEnumerator CharacterRotate(Vector3 RotateDir)
     {
         float angle = 0;
@@ -239,7 +239,7 @@ public class PlayerController : MonoBehaviour
 
         rotateCoroutine = null;
     }
-    
+
     IEnumerator SetBlendValue(float value)
     {
         float nowValue = Animator.GetFloat("Speed");
@@ -263,7 +263,7 @@ public class PlayerController : MonoBehaviour
         Animator.SetFloat("Speed", value);
         blendCoroutine = null;
     }
-    
+
     IEnumerator InputCheck(int frame)
     {
         IsInput = true;
@@ -273,10 +273,10 @@ public class PlayerController : MonoBehaviour
         }
         IsInput = false;
     }
-    
+
     // 애니메이션 이벤트
     private void ComboEnd()
     {
-        PlayerFSM.ChangeState(EPlayerState.Idle);
+        PlayerFSM.ChangeState(PlayerFSM.BeforeState == EPlayerState.Run ? EPlayerState.Run : EPlayerState.Idle);
     }
 }

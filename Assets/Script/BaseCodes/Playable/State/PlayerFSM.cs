@@ -36,6 +36,7 @@ public class PlayerFSM
         curEState = state;
 
         curState.OnStateEnter();
+        Debug.Log($"상태 변경됨 : {curEState}");
     }
 
     public void OnUpdate()

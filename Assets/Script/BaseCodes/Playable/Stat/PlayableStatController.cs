@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayableStatController : MonoBehaviour, IDamagable
 {
-    [SerializeField] PlayerBattleStat stat;
-    public PlayerBattleStat Stat => stat;
+    [SerializeField] PlayableStat stat;
+    public PlayableStat Stat => stat;
 
 
     private void Awake()

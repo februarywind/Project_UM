@@ -24,11 +24,6 @@ public static class Utill
         }
         return vector3;
     }
-    public static void AddUniqueAction(this Action action, Action function)
-    {
-        action -= function;
-        action += function;
-    }
 
     private static Dictionary<float, WaitForSeconds> delayMap = new();
     public static WaitForSeconds GetDelay(float delay)
