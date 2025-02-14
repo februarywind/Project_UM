@@ -16,6 +16,6 @@ public class PlayerWalkState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        controller.PlayerMove(controller.CharacterStat.WalkSpeed);
+        controller.PlayerMove(controller.CharacterMovingStat.WalkSpeed);
     }
 }

@@ -1,13 +1,14 @@
 using System.Collections;
 using UnityEngine;
 
-public class UltimateSkillBase : MonoBehaviour
+public class BattleSkillBase : MonoBehaviour
 {
     [SerializeField] protected PlayerSkillData skillData;
+
     public bool IsCoolTime { get; private set; }
 
-    protected PlayerFSM playerFSM;
     protected PlayerController playerController;
+    protected PlayerFSM playerFSM;
 
     private Coroutine coolCoroutine;
 
@@ -16,12 +17,12 @@ public class UltimateSkillBase : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerFSM = playerController.PlayerFSM;
     }
-    public virtual void UltimateSkillActivate()
+    public virtual void BattleSkillActivate()
     {
-        Debug.Log("궁극기 사용");
+        Debug.Log("전투 스킬 사용");
     }
 
-    protected void SkillCoolTime()
+    public virtual void SkillCoolTime() 
     {
         coolCoroutine = StartCoroutine(CoolDown());
     }

@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StopAction
-{
-    All, Move, Dash, Gravity, Size
-}
-
 public class PlayerController : MonoBehaviour
 {
     // 입력 관련 변수
@@ -31,10 +26,13 @@ public class PlayerController : MonoBehaviour
     private float gravityVelocity;
 
     // 스킬 및 스탯
-    public PlayerMovingStat CharacterStat => characterStat;
+    public PlayerMovingStat CharacterMovingStat => movingStat;
+    public PlayableStatController StatController => statController;
+
     [SerializeField] BattleSkillBase battleSkill;
     [SerializeField] UltimateSkillBase ultimateSkill;
-    [SerializeField] PlayerMovingStat characterStat;
+    [SerializeField] PlayerMovingStat movingStat;
+    [SerializeField] PlayableStatController statController;
 
     // 코루틴 관리
     private Coroutine rotateCoroutine;
@@ -47,7 +45,7 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main;
         Animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-        PlayerFSM = new(this, characterStat, Animator, battleSkill, ultimateSkill);
+        PlayerFSM = new(this, movingStat, Animator, battleSkill, ultimateSkill);
 
         stateHandlerDic.Add(EPlayerState.Idle, IdleHandler);
         stateHandlerDic.Add(EPlayerState.Walk, WalkHandler);
@@ -135,7 +133,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && IsGround())
         {
-            gravityVelocity = characterStat.JumpHeight;
+            gravityVelocity = movingStat.JumpHeight;
             PlayerFSM.ChangeState(EPlayerState.Jump);
         }
     }
@@ -181,7 +179,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            gravityVelocity += characterStat.Gravity * Time.deltaTime;
+            gravityVelocity += movingStat.Gravity * Time.deltaTime;
         }
     }
     
@@ -202,9 +200,9 @@ public class PlayerController : MonoBehaviour
     {
         float elapsedTime = 0;
         PlayerRotate(dir);
-        while (elapsedTime < characterStat.DashTime)
+        while (elapsedTime < movingStat.DashTime)
         {
-            characterController.Move(((dir * characterStat.DashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);
+            characterController.Move(((dir * movingStat.DashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -229,7 +227,7 @@ public class PlayerController : MonoBehaviour
         }
         while (angle < targetAngle)
         {
-            float angleSpeed = characterStat.RotateSpeed * Time.deltaTime;
+            float angleSpeed = movingStat.RotateSpeed * Time.deltaTime;
 
             // 기준점, 회전축, 속도
             transform.RotateAround(transform.position, axis, angleSpeed);

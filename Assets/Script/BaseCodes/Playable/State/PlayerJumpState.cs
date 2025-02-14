@@ -15,7 +15,7 @@ public class PlayerJumpState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        controller.PlayerMove(controller.PlayerFSM.BeforeState == EPlayerState.Run ? controller.CharacterStat.RunSpeed : controller.CharacterStat.WalkSpeed);
+        controller.PlayerMove(controller.PlayerFSM.BeforeState == EPlayerState.Run ? controller.CharacterMovingStat.RunSpeed : controller.CharacterMovingStat.WalkSpeed);
 
         if (!isAir)
             isAir = !controller.IsGround();

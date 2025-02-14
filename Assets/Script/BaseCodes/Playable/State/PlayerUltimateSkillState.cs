@@ -10,7 +10,6 @@ public class PlayerUltimateSkillState : PlayerStateBase
 
     public override void OnStateEnter()
     {
-        Debug.Log(1111111);
         controller.ConvertibleStates = convertibleStates;
         ultimateSkill.UltimateSkillActivate();
     }
