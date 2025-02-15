@@ -1,17 +1,24 @@
 using System;
 using UnityEngine;
 
+public enum StatPer
+{
+    MaxHp, MaxStamina, AttackPower, Size
+}
+
 [CreateAssetMenu(fileName = "PlayerBattleStat", menuName = "Scriptable Objects/PlayerBattleStat")]
 public class PlayableStat : ScriptableObject
 {
+    [SerializeField] float[] statPers = new float[(int)StatPer.Size];
+
     [SerializeField] float maxHp;
     public float MaxHp 
     { 
-        get => maxHp + (maxHp * maxHpPer * 0.01f); 
+        get => maxHp + (maxHp * GetPerStat(StatPer.MaxHp) * 0.01f); 
         set
         {
             maxHp = value;
-            OnChangeMaxHp?.Invoke(MaxHp);
+            OnChangeCurHp?.Invoke(CurHp);
         }
     }
 
@@ -26,18 +33,51 @@ public class PlayableStat : ScriptableObject
         }
     }
 
-    [SerializeField] float maxHpPer;
-    public float MaxHpPer 
+    [SerializeField] float maxStamina;
+    public float MaxStamina
     { 
-        get => maxHpPer; 
+        get => maxStamina + (maxStamina * GetPerStat(StatPer.MaxStamina) * 0.01f); 
         set
         {
-            maxHpPer = value;
-            OnChangeMaxHpPer?.Invoke(MaxHpPer);
+            maxStamina = value;
+            OnChangeCurStamina?.Invoke(CurStamina);
         }
     }
 
-    public event Action<float> OnChangeMaxHp;
-    public event Action<float> OnChangeMaxHpPer;
+    [SerializeField] float curStamina;
+    public float CurStamina
+    { 
+        get => curStamina; 
+        set
+        {
+            curStamina = Mathf.Clamp(value, 0, MaxStamina);
+            OnChangeCurStamina?.Invoke(CurStamina);
+        }
+    }
+
+    [SerializeField] float attackPower;
+    public float AttackPower
+    { 
+        get => attackPower + (attackPower * GetPerStat(StatPer.AttackPower) * 0.01f); 
+        set
+        {
+            attackPower = value;
+            OnChangeAttackPower?.Invoke(AttackPower);
+        }
+    }
+
+    public void SetPerStat(StatPer statPer, float value)
+    {
+        statPers[(int)statPer] += value;
+        OnChangePerStat?.Invoke(statPers);
+    }
+    public float GetPerStat(StatPer statPer)
+    {
+        return statPers[(int)statPer];
+    }
+
     public event Action<float> OnChangeCurHp;
+    public event Action<float> OnChangeCurStamina;
+    public event Action<float> OnChangeAttackPower;
+    public event Action<float[]> OnChangePerStat;
 }

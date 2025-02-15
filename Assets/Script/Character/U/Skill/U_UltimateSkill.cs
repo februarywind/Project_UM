@@ -23,7 +23,7 @@ public class U_UltimateSkill : UltimateSkillBase
         {
             for (int j = 0; j < indexLength; j++)
             {
-                hits[j].transform.GetComponent<IDamagable>().TakeDamage(skillData.Damage, EAtackElement.Electric);
+                hits[j].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Electric);
             }
             yield return Utill.GetDelay(0.1f);
         }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M_UltimateSkillData
   m_EditorClassIdentifier: 
   coolTime: 5
-  damage: 10
+  damageRatio: 1.5
   radius: 4
   range: 1
   delay: 1

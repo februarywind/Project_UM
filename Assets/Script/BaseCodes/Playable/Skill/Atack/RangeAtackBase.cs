@@ -3,6 +3,11 @@ using UnityEngine;
 public class RangeAtackBase : MonoBehaviour
 {
     [SerializeField] RangeAtackData rangeAtackData;
+    private PlayableStat stat;
+    private void Awake()
+    {
+        stat = GetComponent<PlayableStatController>().Stat;
+    }
 
     // 애니메이션 이벤트
     private void RangeAtack(int index)
@@ -13,7 +18,7 @@ public class RangeAtackBase : MonoBehaviour
     {
         if (Physics.SphereCast(transform.position, rangeData.Radius, transform.forward, out RaycastHit hit, rangeData.Range, rangeAtackData.TargetLayer))
         {
-            hit.transform.GetComponent<IDamagable>().TakeDamage(rangeData.Damage, EAtackElement.Normal);
+            hit.transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * rangeData.DamageRatio, EAtackElement.Normal);
         }
     }
 

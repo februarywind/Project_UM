@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: M_RangeAtackData
   m_EditorClassIdentifier: 
   RangeDatas:
-  - Damage: 3
+  - DamageRatio: 1
     Range: 4
     Radius: 1
-  - Damage: 4
+  - DamageRatio: 1.2
     Range: 4
     Radius: 1
-  - Damage: 7
+  - DamageRatio: 1.5
     Range: 4
     Radius: 1
   TargetLayer:

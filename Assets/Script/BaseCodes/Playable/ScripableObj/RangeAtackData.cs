@@ -12,7 +12,7 @@ public class RangeAtackData : ScriptableObject
 [Serializable]
 public class RangeData
 {
-    public float Damage;
+    public float DamageRatio;
     public float Range;
     public float Radius;
 }

@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] UltimateSkillBase ultimateSkill;
     [SerializeField] PlayerMovingStat movingStat;
     [SerializeField] PlayableStatController statController;
+    [SerializeField] UIController uIController;
 
     // 코루틴 관리
     private Coroutine rotateCoroutine;
@@ -58,6 +59,11 @@ public class PlayerController : MonoBehaviour
         stateHandlerDic.Add(EPlayerState.BattleSkill, BattleSkillHandler);
         stateHandlerDic.Add(EPlayerState.UltimateSkill, UltimateSkillHandler);
         stateHandlerDic.Add(EPlayerState.Change, ChangeHandler);
+    }
+
+    private void OnEnable()
+    {
+        uIController.CharacterChange(statController.Stat);
     }
 
     private void ChangeHandler()

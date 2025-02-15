@@ -13,7 +13,7 @@ public class MeleeAtackData : ScriptableObject
 [Serializable]
 public class MeleeData
 {
-    public float Damage;
+    public float DamageRatio;
     public float Range;
     public float Angle;
 }

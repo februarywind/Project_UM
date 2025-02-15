@@ -4,21 +4,30 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] PlayableStatController statController;
     [SerializeField] GameObject statCanvas;
+    [SerializeField] Slider hpSlider;
     [SerializeField] TMP_Text hpText;
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text attackPowerText;
-    private Slider hpSlider;
 
-    private void Awake()
+    private PlayableStat playableStat;
+
+    public void CharacterChange(PlayableStat stat)
     {
-        hpSlider = GetComponentInChildren<Slider>();
-        hpSlider.maxValue = statController.Stat.MaxHp;
+        playableStat = stat;
 
-        statController.Stat.OnChangeCurHp += Stat_OnChangeCurHp;
+        stat.OnChangeCurHp -= Stat_OnChangeCurHp;
+        stat.OnChangeCurHp += Stat_OnChangeCurHp;
+        Stat_OnChangeCurHp(stat.CurHp);
 
-        Stat_OnChangeCurHp(statController.Stat.CurHp);
+        stat.OnChangeAttackPower += Stat_OnChangeAttackPower;
+        stat.OnChangeAttackPower += Stat_OnChangeAttackPower;
+        Stat_OnChangeAttackPower(stat.AttackPower);
+    }
+
+    private void Stat_OnChangeAttackPower(float attackPower)
+    {
+        attackPowerText.text = $"Attack Power: {attackPower}";
     }
 
     private void Update()
@@ -29,9 +38,20 @@ public class UIController : MonoBehaviour
         }
     }
 
-    private void Stat_OnChangeCurHp(float value)
+    private void Stat_OnChangeCurHp(float curHp)
     {
-        hpSlider.value = value;
-        hpText.text = $"HP : {statController.Stat.CurHp} / {statController.Stat.MaxHp}";
+        hpSlider.maxValue = playableStat.MaxHp;
+        hpSlider.value = curHp;
+
+        hpText.text = $"HP : {curHp} / {playableStat.MaxHp}";
+    }
+
+    [ContextMenu("levelup")]
+    private void TempLevelUp()
+    {
+        playableStat.SetPerStat(StatPer.MaxHp, 10);
+        playableStat.MaxHp += 10;
+        playableStat.MaxStamina += 10;
+        playableStat.AttackPower += 10;
     }
 }

@@ -9,6 +9,7 @@ public class BattleSkillBase : MonoBehaviour
 
     protected PlayerController playerController;
     protected PlayerFSM playerFSM;
+    protected PlayableStat stat;
 
     private Coroutine coolCoroutine;
 
@@ -16,6 +17,7 @@ public class BattleSkillBase : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
         playerFSM = playerController.PlayerFSM;
+        stat = playerController.StatController.Stat;
     }
     public virtual void BattleSkillActivate()
     {

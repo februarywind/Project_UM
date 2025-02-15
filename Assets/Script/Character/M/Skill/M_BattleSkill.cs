@@ -18,12 +18,13 @@ public class M_BattleSkill : BattleSkillBase
 
     IEnumerator HealSkill()
     {
+        float healValue = stat.AttackPower * skillData.DamageRatio;
         yield return Utill.GetDelay(skillData.Delay);
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, skillData.Range, skillData.TargetLayer);
         for (int i = 0; i < indexLength; i++)
         {
-            hits[i].transform.GetComponent<PlayerController>().StatController.Stat.CurHp += skillData.Damage;
-            DamagePopUpManager.instance.ShowDamagePopUp(hits[i].transform.position, $"{skillData.Damage}", Color.green);
+            hits[i].transform.GetComponent<PlayerController>().StatController.Stat.CurHp += healValue;
+            DamagePopUpManager.instance.ShowDamagePopUp(hits[i].transform.position, $"{healValue}", Color.green);
         }
         yield return Utill.GetDelay(skillData.Delay);
         playerFSM.ChangeState(EPlayerState.Idle);

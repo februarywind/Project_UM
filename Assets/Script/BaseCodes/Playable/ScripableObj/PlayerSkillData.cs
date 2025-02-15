@@ -6,8 +6,8 @@ public class PlayerSkillData : ScriptableObject
     [SerializeField] float coolTime;
     public float CoolTime => coolTime;
 
-    [SerializeField] float damage;
-    public float Damage => damage;
+    [SerializeField] float damageRatio;
+    public float DamageRatio => damageRatio;
 
     [SerializeField] float radius;
     public float Radius => radius;

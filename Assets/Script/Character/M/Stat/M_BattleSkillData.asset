@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: M_BattleSkillData
   m_EditorClassIdentifier: 
   coolTime: 0
-  damage: 50
+  damageRatio: 2
   radius: 2
   range: 1
   delay: 1

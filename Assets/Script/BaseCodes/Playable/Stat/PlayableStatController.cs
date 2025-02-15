@@ -6,7 +6,7 @@ public class PlayableStatController : MonoBehaviour, IDamagable
     public PlayableStat Stat => stat;
 
 
-    private void Awake()
+    private void Start()
     {
         // 여기서 데이터 초기화를 한다.
 
@@ -16,7 +16,7 @@ public class PlayableStatController : MonoBehaviour, IDamagable
 
     private void Stat_OnChangeCurHp(float obj)
     {
-        //Debug.Log(obj);
+
     }
 
     public void TakeDamage(float damage, EAtackElement element)

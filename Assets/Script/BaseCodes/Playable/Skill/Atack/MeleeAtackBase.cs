@@ -3,6 +3,11 @@ using UnityEngine;
 public class MeleeAtackBase : MonoBehaviour
 {
     [SerializeField] MeleeAtackData meleeAtackData;
+    private PlayableStat stat;
+    private void Awake()
+    {
+        stat = GetComponent<PlayableStatController>().Stat;
+    }
 
     // 애니메이션 이벤트
     private void MeleeAtack(int index)
@@ -31,7 +36,7 @@ public class MeleeAtackBase : MonoBehaviour
             // 0.5를 곱해 angle의 절반만큼의 값과 비교한다.
             if (targetAngle > meleeData.Angle * 0.5f)
                 continue;
-            col.GetComponent<IDamagable>().TakeDamage(meleeData.Damage, EAtackElement.Normal);
+            col.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * meleeData.DamageRatio, EAtackElement.Normal);
         }
     }
 
