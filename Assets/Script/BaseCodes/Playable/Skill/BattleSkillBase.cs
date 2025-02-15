@@ -26,13 +26,18 @@ public class BattleSkillBase : MonoBehaviour
         Debug.Log("전투 스킬 사용");
     }
 
+    protected void CoolDownStart()
+    {
+        skillController.CoroutineAgent(CoolDown());
+    }
+
     public void CoolTimeReset()
     {
         StopCoroutine(coolCoroutine);
         IsCoolTime = false;
     }
 
-    public IEnumerator CoolDown()
+    private IEnumerator CoolDown()
     {
         IsCoolTime = true;
         yield return Utill.GetDelay(skillData.CoolTime);

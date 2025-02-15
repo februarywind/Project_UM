@@ -26,13 +26,18 @@ public class UltimateSkillBase : MonoBehaviour
         Debug.Log("궁극기 사용");
     }
 
+    protected void CoolDownStart()
+    {
+        skillController.CoroutineAgent(CoolDown());
+    }
+
     public void CoolTimeReset()
     {
         StopCoroutine(coolCoroutine);
         IsCoolTime = false;
     }
 
-    public IEnumerator CoolDown()
+    private IEnumerator CoolDown()
     {
         IsCoolTime = true;
         yield return Utill.GetDelay(skillData.CoolTime);

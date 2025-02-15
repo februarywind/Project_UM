@@ -18,7 +18,7 @@ public class M_UltimateSkill : UltimateSkillBase
     {
         yield return Utill.GetDelay(skillData.Delay);
         StartCoroutine(UltimateSkill(transform.position));
-        skillController.UtimateSkillCoolTimeStart();
+        CoolDownStart();
         playerFSM.ChangeState(EPlayerState.Idle);
     }
 
