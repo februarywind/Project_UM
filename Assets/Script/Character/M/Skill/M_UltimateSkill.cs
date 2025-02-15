@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -19,10 +18,11 @@ public class M_UltimateSkill : UltimateSkillBase
     {
         yield return Utill.GetDelay(skillData.Delay);
         StartCoroutine(UltimateSkill(transform.position));
+        skillController.UtimateSkillCoolTimeStart();
         playerFSM.ChangeState(EPlayerState.Idle);
     }
 
-    IEnumerator UltimateSkill(Vector3 pos)
+    public IEnumerator UltimateSkill(Vector3 pos)
     {
         for (int i = 0; i < skillData.HitCount; i++)
         {

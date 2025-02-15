@@ -26,7 +26,7 @@ public class M_BattleSkill : BattleSkillBase
             hits[i].transform.GetComponent<PlayerController>().StatController.Stat.CurHp += healValue;
             DamagePopUpManager.instance.ShowDamagePopUp(hits[i].transform.position, $"{healValue}", Color.green);
         }
-        yield return Utill.GetDelay(skillData.Delay);
+        skillController.BattleSkillCoolTimeStart();
         playerFSM.ChangeState(EPlayerState.Idle);
     }
 }

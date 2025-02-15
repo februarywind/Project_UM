@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717c63d300bed04419d90ae037a30adf, type: 3}
   m_Name: M_BattleSkillData
   m_EditorClassIdentifier: 
-  coolTime: 0
+  coolTime: 5
   damageRatio: 2
   radius: 2
   range: 1

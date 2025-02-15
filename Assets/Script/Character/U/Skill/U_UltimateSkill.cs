@@ -28,6 +28,6 @@ public class U_UltimateSkill : UltimateSkillBase
             yield return Utill.GetDelay(0.1f);
         }
         playerFSM.ChangeState(EPlayerState.Idle);
-        SkillCoolTime();
+        skillController.UtimateSkillCoolTimeStart();
     }
 }

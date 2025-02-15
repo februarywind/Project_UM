@@ -33,7 +33,7 @@ public class U_BattleSkill : BattleSkillBase
 
         playerFSM.ChangeState(EPlayerState.Idle);
 
-        SkillCoolTime();
+        skillController.BattleSkillCoolTimeStart();
     }
 
     private void OnDrawGizmos()

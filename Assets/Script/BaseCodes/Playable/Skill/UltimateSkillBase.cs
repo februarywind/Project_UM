@@ -12,8 +12,11 @@ public class UltimateSkillBase : MonoBehaviour
 
     private Coroutine coolCoroutine;
 
+    protected SkillController skillController;
+
     private void Start()
     {
+        skillController = GetComponentInParent<SkillController>();
         playerController = GetComponent<PlayerController>();
         playerFSM = playerController.PlayerFSM;
         stat = playerController.StatController.Stat;
@@ -23,18 +26,13 @@ public class UltimateSkillBase : MonoBehaviour
         Debug.Log("궁극기 사용");
     }
 
-    protected void SkillCoolTime()
-    {
-        coolCoroutine = StartCoroutine(CoolDown());
-    }
-
     public void CoolTimeReset()
     {
         StopCoroutine(coolCoroutine);
         IsCoolTime = false;
     }
 
-    IEnumerator CoolDown()
+    public IEnumerator CoolDown()
     {
         IsCoolTime = true;
         yield return Utill.GetDelay(skillData.CoolTime);
