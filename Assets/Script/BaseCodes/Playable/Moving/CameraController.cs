@@ -18,7 +18,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F2))
         {
-            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None: CursorLockMode.Locked;
         }
     }
 
