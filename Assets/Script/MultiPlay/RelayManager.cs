@@ -11,8 +11,8 @@ using UnityEngine.UI;
 
 public class RelayManager : MonoBehaviour
 {
-    [SerializeField] Button joinButton;
-    [SerializeField] TMP_InputField codeTMP;
+    [SerializeField] TMP_InputField field;
+    [SerializeField] Button button;
     [ContextMenu("CreateRoom")]
     private async void CreateRoom()
     {
@@ -21,12 +21,12 @@ public class RelayManager : MonoBehaviour
     [ContextMenu("JoinRoom")]
     private async void JoinRoom()
     {
-        await JoinRelay(codeTMP.text);
+        await JoinRelay(field.text);
     }
     private async void Start()
     {
         await InitializeUnityServices();
-        joinButton.onClick.AddListener(JoinRoom);
+        button.onClick.AddListener(JoinRoom);
     }
 
     private async Task InitializeUnityServices()

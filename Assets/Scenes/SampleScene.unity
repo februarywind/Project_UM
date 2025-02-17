@@ -2055,10 +2055,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: unitychan
       objectReference: {fileID: 0}
-    - target: {fileID: 6156416492784114429, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
-      propertyPath: uIController
-      value: 
-      objectReference: {fileID: 1969545215}
     - target: {fileID: 8835467220885358321, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2574,7 +2570,7 @@ GameObject:
   - component: {fileID: 1858750679}
   - component: {fileID: 1858750680}
   m_Layer: 0
-  m_Name: CharacterChanger
+  m_Name: CharacterController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2595,6 +2591,7 @@ Transform:
   m_Children:
   - {fileID: 2069679185}
   - {fileID: 1253232152}
+  - {fileID: 1969545219}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1858750679
@@ -2844,7 +2841,7 @@ GameObject:
   - component: {fileID: 1969545216}
   - component: {fileID: 1969545215}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: PlayableStatCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2948,7 +2945,7 @@ RectTransform:
   - {fileID: 1904323261}
   - {fileID: 372990939}
   - {fileID: 569452189}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1858750678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2999,10 +2996,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1858750678}
     m_Modifications:
-    - target: {fileID: 4377312060827598117, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
-      propertyPath: uIController
-      value: 
-      objectReference: {fileID: 1969545215}
     - target: {fileID: 5147904385185677057, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
       propertyPath: m_Name
       value: ToonModel
@@ -3301,4 +3294,3 @@ SceneRoots:
   - {fileID: 432160646}
   - {fileID: 1858750678}
   - {fileID: 256095561093740610}
-  - {fileID: 1969545219}

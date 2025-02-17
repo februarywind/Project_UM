@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] UltimateSkillBase ultimateSkill;
     [SerializeField] PlayerMovingStat movingStat;
     [SerializeField] PlayableStatController statController;
-    [SerializeField] UIController uIController;
+    private UIController uIController;
 
     // 코루틴 관리
     private Coroutine rotateCoroutine;
@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     {
         cam = Camera.main;
         Animator = GetComponent<Animator>();
+        uIController = transform.parent.GetComponentInChildren<UIController>();
         characterController = GetComponent<CharacterController>();
         characterChange = GetComponentInParent<PlayableCharacterChange>();
         PlayerFSM = new(this, movingStat, Animator, battleSkill, ultimateSkill);
