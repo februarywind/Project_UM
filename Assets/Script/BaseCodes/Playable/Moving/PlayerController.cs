@@ -63,6 +63,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        // 플레이어 컨트롤러는 게임 시작과 캐릭터 변경시 OnEnable되므로 아래에 해당 메서드를 넣었음
         uIController.CharacterChange(statController.Stat);
     }
 

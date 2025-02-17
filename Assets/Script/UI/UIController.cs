@@ -49,9 +49,7 @@ public class UIController : MonoBehaviour
     [ContextMenu("levelup")]
     private void TempLevelUp()
     {
-        playableStat.SetPerStat(StatPer.MaxHp, 10);
-        playableStat.MaxHp += 10;
-        playableStat.MaxStamina += 10;
-        playableStat.AttackPower += 10;
+        playableStat.SetPerStat(PerStat.MaxHp, 10);
+        playableStat.SetFixedStat(FixedStat.MaxHp, 10);
     }
 }

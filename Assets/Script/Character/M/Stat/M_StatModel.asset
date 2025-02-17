@@ -13,11 +13,15 @@ MonoBehaviour:
   m_Name: M_StatModel
   m_EditorClassIdentifier: 
   statPers:
-  - 10
   - 0
   - 0
-  maxHp: 1010
-  curHp: 1111
+  - 0
+  fixedstats:
+  - 0
+  - 0
+  - 0
+  maxHp: 90
   maxStamina: 70
-  curStamina: 0
   attackPower: 10
+  curHp: 90
+  curStamina: 0
