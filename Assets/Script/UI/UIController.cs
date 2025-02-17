@@ -18,6 +18,12 @@ public class UIController : MonoBehaviour
     private Coroutine ultimateCoolCoroutine;
     private Coroutine battleCoolCoroutine;
 
+    private CameraController cameraController;
+    private void Start()
+    {
+        cameraController = Camera.main.GetComponent<CameraController>();
+    }
+
     public void CharacterChange(PlayableStat stat, UltimateSkillBase ultimate, BattleSkillBase battle)
     {
         playableStat = stat;
@@ -58,7 +64,18 @@ public class UIController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            statCanvas.SetActive(!statCanvas.activeSelf);
+            if (statCanvas.activeSelf)
+            {
+                statCanvas.SetActive(false);
+                cameraController.LookAtCharacter(false, 1);
+                cameraController.CameraInput(true);
+            }
+            else
+            {
+                cameraController.CameraInput(false);
+                statCanvas.SetActive(true);
+                cameraController.LookAtCharacter(true, 0.4f);
+            }
         }
     }
 
