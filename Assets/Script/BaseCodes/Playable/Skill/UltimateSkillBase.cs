@@ -1,10 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+public class SkillCoolData
+{
+    public float CoolTime;
+    public float OnSkillTime;
+}
 
 public class UltimateSkillBase : MonoBehaviour
 {
     [SerializeField] protected PlayerSkillData skillData;
     public bool IsCoolTime { get; private set; }
+    public SkillCoolData skillCoolData { get; private set; } = new();
 
     protected PlayerController playerController;
     protected PlayerFSM playerFSM;
@@ -20,6 +27,7 @@ public class UltimateSkillBase : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerFSM = playerController.PlayerFSM;
         stat = playerController.StatController.Stat;
+        skillCoolData.CoolTime = skillData.CoolTime;
     }
     public virtual void UltimateSkillActivate()
     {
@@ -40,6 +48,8 @@ public class UltimateSkillBase : MonoBehaviour
     private IEnumerator CoolDown()
     {
         IsCoolTime = true;
+        skillCoolData.OnSkillTime = Time.time;
+        playerController.UIController.UI_SkillCool(skillCoolData.CoolTime, skillCoolData.OnSkillTime, true, IsCoolTime);
         yield return Utill.GetDelay(skillData.CoolTime);
         IsCoolTime = false;
     }

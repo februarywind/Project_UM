@@ -5,6 +5,7 @@ public class BattleSkillBase : MonoBehaviour
 {
     [SerializeField] protected PlayerSkillData skillData;
     public bool IsCoolTime { get; private set; }
+    public SkillCoolData skillCoolData { get; private set; } = new();
 
     protected PlayerController playerController;
     protected PlayerFSM playerFSM;
@@ -20,6 +21,7 @@ public class BattleSkillBase : MonoBehaviour
         playerController = GetComponent<PlayerController>();
         playerFSM = playerController.PlayerFSM;
         stat = playerController.StatController.Stat;
+        skillCoolData.CoolTime = skillData.CoolTime;
     }
     public virtual void BattleSkillActivate()
     {
@@ -40,6 +42,8 @@ public class BattleSkillBase : MonoBehaviour
     private IEnumerator CoolDown()
     {
         IsCoolTime = true;
+        skillCoolData.OnSkillTime = Time.time;
+        playerController.UIController.UI_SkillCool(skillCoolData.CoolTime, skillCoolData.OnSkillTime, false, IsCoolTime);
         yield return Utill.GetDelay(skillData.CoolTime);
         IsCoolTime = false;
     }
