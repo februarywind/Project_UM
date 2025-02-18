@@ -2,15 +2,25 @@ using UnityEngine;
 
 public class PlayableCharacterChange : MonoBehaviour
 {
+    public PlayerController CurController { get; private set; }
+
     [SerializeField] PlayerController uController;
     [SerializeField] Transform uCameraTarget;
     [SerializeField] PlayerController mController;
     [SerializeField] Transform mCameraTarget;
 
+    private CameraController cameraController;
+    private void Awake()
+    {
+        cameraController = Camera.main.GetComponent<CameraController>();
+        CurController = mController;
+    }
+
     public void ChangeCharacter(PlayerController curController)
     {
         PlayerController before = curController;
         PlayerController after = curController == uController ? mController : uController;
+        CurController = after;
 
         before.StatController.Stat.RemoveAllEvent();
 
@@ -24,6 +34,6 @@ public class PlayableCharacterChange : MonoBehaviour
 
         after.PlayerFSM.ChangeState(EPlayerState.Idle);
 
-        Camera.main.GetComponent<CameraController>().CameraFollowChange(after == uController ? uCameraTarget : mCameraTarget);
+        cameraController.CameraFollowChange(after == uController ? uCameraTarget : mCameraTarget);
     }
 }
