@@ -1,110 +1,48 @@
-using System.Collections;
-using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    [SerializeField] GameObject statCanvas;
-    [SerializeField] Slider hpSlider;
-    [SerializeField] TMP_Text hpText;
-    [SerializeField] TMP_Text staminaText;
-    [SerializeField] TMP_Text attackPowerText;
-    [SerializeField] Image ultimateCoolImage;
-    [SerializeField] Image battleCoolImage;
+    [SerializeField] GameObject infoPanel;
 
-    private PlayableStat playableStat;
+    [SerializeField] UIStatView statView;
+    [SerializeField] Button statViewButton;
 
-    private Coroutine ultimateCoolCoroutine;
-    private Coroutine battleCoolCoroutine;
+    [SerializeField] UIInventoryView inventoryView;
+    [SerializeField] Button inventoryViewButton;
 
-    private CameraController cameraController;
-    private void Start()
+    [SerializeField] UIEquipmentView equipmentView;
+    [SerializeField] Button equipmentViewButton;
+    public UIStatView StatView => statView;
+    public UIInventoryView InventoryView => inventoryView;
+    public UIEquipmentView EquipmentView => equipmentView;
+    private void Awake()
     {
-        cameraController = Camera.main.GetComponent<CameraController>();
-    }
-
-    public void CharacterChange(PlayableStat stat, UltimateSkillBase ultimate, BattleSkillBase battle)
-    {
-        playableStat = stat;
-
-        stat.OnChangeCurHp -= Stat_OnChangeCurHp;
-        stat.OnChangeCurHp += Stat_OnChangeCurHp;
-        Stat_OnChangeCurHp(stat.CurHp);
-
-        stat.OnChangeAttackPower += Stat_OnChangeAttackPower;
-        stat.OnChangeAttackPower += Stat_OnChangeAttackPower;
-        Stat_OnChangeAttackPower(stat.AttackPower);
-
-        UI_SkillCool(ultimate.skillCoolData.CoolTime, ultimate.skillCoolData.OnSkillTime, true, ultimate.IsCoolTime);
-        UI_SkillCool(battle.skillCoolData.CoolTime, battle.skillCoolData.OnSkillTime, false, battle.IsCoolTime);
-    }
-    public void UI_SkillCool(float coolTime, float onSkillTime, bool isUltimate, bool isCoolTime)
-    {
-        if (isUltimate)
-        {
-            if (ultimateCoolCoroutine != null)
-                StopCoroutine(ultimateCoolCoroutine);
-            ultimateCoolCoroutine = StartCoroutine(SkillCoolImg(coolTime, onSkillTime, isUltimate, isCoolTime));
-        }
-        else
-        {
-            if (battleCoolCoroutine != null)
-                StopCoroutine(battleCoolCoroutine);
-            battleCoolCoroutine = StartCoroutine(SkillCoolImg(coolTime, onSkillTime, isUltimate, isCoolTime));
-        }
-    }
-
-    private void Stat_OnChangeAttackPower(float attackPower)
-    {
-        attackPowerText.text = $"Attack Power: {attackPower}";
+        statViewButton.onClick.AddListener(() => PanelControl(1));
+        inventoryViewButton.onClick.AddListener(() => PanelControl(2));
+        equipmentViewButton.onClick.AddListener(() => PanelControl(3));
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.I))
         {
-            if (statCanvas.activeSelf)
+            if (infoPanel.activeSelf)
             {
-                statCanvas.SetActive(false);
-                cameraController.LookAtCharacter(false, 1);
-                cameraController.CameraInput(true);
+                infoPanel.SetActive(false);
             }
             else
             {
-                cameraController.CameraInput(false);
-                statCanvas.SetActive(true);
-                cameraController.LookAtCharacter(true, 0.4f);
+                infoPanel.SetActive(true);
             }
         }
     }
 
-    private void Stat_OnChangeCurHp(float curHp)
+    private void PanelControl(int n)
     {
-        hpSlider.maxValue = playableStat.MaxHp;
-        hpSlider.value = curHp;
-
-        hpText.text = $"HP : {curHp} / {playableStat.MaxHp}";
-    }
-
-    IEnumerator SkillCoolImg(float coolTime, float onSkillTime, bool isUltimate, bool isCoolTime)
-    {
-        float multy = 1 / coolTime;
-        float remainingTime = coolTime - (Time.time - onSkillTime);
-        Image image = isUltimate ? ultimateCoolImage : battleCoolImage;
-        while (isCoolTime && remainingTime > 0)
-        {
-            image.fillAmount = (coolTime - remainingTime) * multy;
-            remainingTime -= Time.deltaTime;
-            yield return null;
-        }
-        image.fillAmount = 1;
-    }
-
-    [ContextMenu("levelup")]
-    private void TempLevelUp()
-    {
-        playableStat.SetPerStat(PerStat.MaxHp, 10);
-        playableStat.SetFixedStat(FixedStat.MaxHp, 10);
+        StatView.SetPanel(1 == n);
+        InventoryView.SetPanel(2 == n);
+        EquipmentView.SetPanel(3 == n);
     }
 }

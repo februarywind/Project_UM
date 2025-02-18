@@ -12,6 +12,8 @@ public class PlayableCharacterChange : MonoBehaviour
         PlayerController before = curController;
         PlayerController after = curController == uController ? mController : uController;
 
+        before.StatController.Stat.RemoveAllEvent();
+
         after.transform.position = before.transform.position;
         after.transform.rotation = before.transform.rotation;
 

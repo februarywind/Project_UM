@@ -8,12 +8,15 @@ public class CameraController : MonoBehaviour
     private CinemachineOrbitalFollow orbitalFollow;
     private CinemachineInputAxisController inputAxisController;
 
+    private Transform follow;
+
     private void Start()
     {
         brain = Camera.main.GetComponent<CinemachineBrain>();
         cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
         orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
         inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
+        follow = cinemachineCamera.Follow;
     }
 
     private void Update()
@@ -27,12 +30,12 @@ public class CameraController : MonoBehaviour
     public void CameraFollowChange(Transform transform)
     {
         cinemachineCamera.Follow = transform;
+        follow = transform;
     }
-    public void LookAtCharacter(bool isForward, float radialValue)
+    public void InventoryCameraPos(PlayerController controller, bool isReset)
     {
-        float t = Vector3.Angle(isForward ? cinemachineCamera.Follow.forward : -cinemachineCamera.Follow.forward, (transform.position.RemoveOne(RemoveDir.Y) - cinemachineCamera.Follow.position.RemoveOne(RemoveDir.Y)).normalized);
-        orbitalFollow.HorizontalAxis.Value += t * (orbitalFollow.HorizontalAxis.Value > 0 ? -1 : 1);
-        orbitalFollow.RadialAxis.Value = radialValue;
+        controller.PlayerRotate(-transform.forward.RemoveOne(RemoveDir.Y));
+        orbitalFollow.RadialAxis.Value = isReset ? 1 : 0.4f;
     }
 
     public void CameraInput(bool isOn)

@@ -49,7 +49,7 @@ public class UltimateSkillBase : MonoBehaviour
     {
         IsCoolTime = true;
         skillCoolData.OnSkillTime = Time.time;
-        playerController.UIController.UI_SkillCool(skillCoolData.CoolTime, skillCoolData.OnSkillTime, true, IsCoolTime);
+        playerController.UIController.StatView.UI_SkillCool(skillCoolData.CoolTime, skillCoolData.OnSkillTime, true, IsCoolTime);
         yield return Utill.GetDelay(skillData.CoolTime);
         IsCoolTime = false;
     }

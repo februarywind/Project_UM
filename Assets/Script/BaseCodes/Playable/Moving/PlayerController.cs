@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         // 플레이어 컨트롤러는 게임 시작과 캐릭터 변경시 OnEnable되므로 아래에 해당 메서드를 넣었음
-        uIController.CharacterChange(statController.Stat, ultimateSkill, battleSkill);
+        uIController.StatView.CharacterChange(this, ultimateSkill, battleSkill);
     }
 
     private void ChangeHandler()
@@ -175,13 +175,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayerMove(float speed)
+    public void PlayerMove(float speed, bool isRotate = true)
     {
         characterController.Move(((InputDir * speed) + Vector3.up * gravityVelocity) * Time.deltaTime);
-        PlayerRotate(InputDir);
+        if (isRotate)
+            PlayerRotate(InputDir);
     }
 
-    private void PlayerRotate(Vector3 moveDir)
+    public void PlayerRotate(Vector3 moveDir)
     {
         // 캐릭터 회전 (움직이는 방향을 바라보도록)
         if (rotateCoroutine != null)

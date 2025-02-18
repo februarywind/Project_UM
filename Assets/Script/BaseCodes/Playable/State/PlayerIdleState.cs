@@ -16,6 +16,6 @@ public class PlayerIdleState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        controller.PlayerMove(0);
+        controller.PlayerMove(0, false);
     }
 }

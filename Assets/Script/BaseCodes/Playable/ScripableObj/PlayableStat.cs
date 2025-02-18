@@ -103,4 +103,11 @@ public class PlayableStat : ScriptableObject
         OnChangeCurStamina?.Invoke(CurStamina);
         OnChangeAttackPower?.Invoke(AttackPower);
     }
+    public void RemoveAllEvent()
+    {
+        OnChangeCurHp = null;
+        OnChangeCurStamina = null;
+        OnChangeAttackPower = null;
+        OnChangePerStat = null;
+    }
 }
