@@ -20,8 +20,8 @@ MonoBehaviour:
   - 0
   - 0
   - 0
-  maxHp: 90
-  maxStamina: 70
+  maxHp: 100
+  maxStamina: 99
   attackPower: 10
-  curHp: 90
+  curHp: 100
   curStamina: 0

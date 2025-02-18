@@ -75,7 +75,7 @@ public class PlayableStat : ScriptableObject
     public void SetPerStat(PerStat statPer, float value)
     {
         statPers[(int)statPer] += value;
-        OnChangePerStat?.Invoke(statPers);
+        AllChange();
     }
     public float GetPerStat(PerStat statPer)
     {
@@ -84,8 +84,8 @@ public class PlayableStat : ScriptableObject
 
     public void SetFixedStat(FixedStat fixedStat, float value)
     {
-        fixedstats[(int)fixedStat] += value;
-        OnChangePerStat?.Invoke(statPers);
+        fixedstats[(int)fixedStat] += value; 
+        AllChange();
     }
     public float GetFixedStat(FixedStat fixedStat)
     {
@@ -96,4 +96,11 @@ public class PlayableStat : ScriptableObject
     public event Action<float> OnChangeCurStamina;
     public event Action<float> OnChangeAttackPower;
     public event Action<float[]> OnChangePerStat;
+
+    private void AllChange()
+    {
+        OnChangeCurHp?.Invoke(CurHp);
+        OnChangeCurStamina?.Invoke(CurStamina);
+        OnChangeAttackPower?.Invoke(AttackPower);
+    }
 }

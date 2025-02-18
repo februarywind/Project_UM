@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5738db6c01ac8be498f1a3fb16557e42, type: 3}
+  m_Name: "\uAC1C\uCA4C\uB294\uBAA8\uC790"
+  m_EditorClassIdentifier: 
+  Part: 1
+  GearName: "\uAC1C\uCA4C\uB294\uBAA8\uC790"
+  FixedStats:
+  - FixedStat: 0
+    Value: 50
+  - FixedStat: 2
+    Value: 5
+  PerStats:
+  - PerStat: 0
+    Value: 0
+  GearUpgrade: {fileID: 11400000, guid: 27d8d2de7f2664b46b08d3f538c2dbf1, type: 2}
+  CurUpgrade: 1
