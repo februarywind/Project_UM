@@ -20,6 +20,7 @@ public class M_BattleSkill : BattleSkillBase
     {
         float healValue = stat.AttackPower * skillData.DamageRatio;
         yield return Utill.GetDelay(skillData.Delay);
+        EffectManager.instance.ParticlePlay("Healing", 2, transform.position, Quaternion.identity, transform);
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, skillData.Range, skillData.TargetLayer);
         for (int i = 0; i < indexLength; i++)
         {

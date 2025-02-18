@@ -3281,6 +3281,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillData: {fileID: 11400000, guid: fb7a38b7cf72f0540bf9e3bda04a9621, type: 2}
+  invisibles:
+  - {fileID: 5643204727260995914}
+  - {fileID: 8289810132439947968}
 --- !u!114 &3852714066543263253
 MonoBehaviour:
   m_ObjectHideFlags: 0

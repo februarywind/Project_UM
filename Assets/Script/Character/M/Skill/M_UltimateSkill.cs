@@ -17,7 +17,8 @@ public class M_UltimateSkill : UltimateSkillBase
     IEnumerator HealSkill()
     {
         yield return Utill.GetDelay(skillData.Delay);
-        StartCoroutine(UltimateSkill(transform.position));
+        EffectManager.instance.ParticlePlay("Healing circle", skillData.HitCount * 0.5f, transform.position, Quaternion.identity);
+        skillController.CoroutineAgent(UltimateSkill(transform.position));
         CoolDownStart();
         playerFSM.ChangeState(EPlayerState.Idle);
     }
