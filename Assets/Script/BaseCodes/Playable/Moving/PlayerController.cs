@@ -110,13 +110,15 @@ public class PlayerController : MonoBehaviour
         // 최종 이동 방향 계산
         InputDir = (camForward * moveZ + camRight * moveX).normalized;
 
+        IsInput = InputDir != Vector3.zero;
+
         // 10 프레임동안 입력이 없으면 입력 없다. Idle 상태로 전환
-        if (InputDir != Vector3.zero)
-        {
-            if (inputCoroutine != null)
-                StopCoroutine(inputCoroutine);
-            inputCoroutine = StartCoroutine(InputCheck(10));
-        }
+        //if (InputDir != Vector3.zero)
+        //{
+        //    if (inputCoroutine != null)
+        //        StopCoroutine(inputCoroutine);
+        //    inputCoroutine = StartCoroutine(InputCheck(10));
+        //}
     }
 
     private void ConvertibleStateCheck()

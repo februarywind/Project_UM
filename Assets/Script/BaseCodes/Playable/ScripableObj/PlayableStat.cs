@@ -13,6 +13,9 @@ public enum FixedStat
 [CreateAssetMenu(fileName = "PlayerBattleStat", menuName = "Scriptable Objects/PlayerBattleStat")]
 public class PlayableStat : ScriptableObject
 {
+    [SerializeField] int level;
+    public int Level => level;
+
     [Header("추가 능력치")]
     [SerializeField] float[] statPers = new float[(int)PerStat.Size];
     [SerializeField] float[] fixedstats = new float[(int)FixedStat.Size];
