@@ -9,6 +9,11 @@ public class PlayerBattleSkillState : PlayerStateBase
 
     public override void OnStateEnter()
     {
+        if (battleSkill.IsCoolTime)
+        {
+            controller.PlayerFSM.ChangeState(controller.PlayerFSM.BeforeState);
+            return;
+        }
         controller.ConvertibleStates = convertibleStates;
         battleSkill.BattleSkillActivate();
     }

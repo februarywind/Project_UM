@@ -10,6 +10,11 @@ public class PlayerUltimateSkillState : PlayerStateBase
 
     public override void OnStateEnter()
     {
+        if (ultimateSkill.IsCoolTime)
+        {
+            controller.PlayerFSM.ChangeState(controller.PlayerFSM.BeforeState);
+            return;
+        }
         controller.ConvertibleStates = convertibleStates;
         ultimateSkill.UltimateSkillActivate();
     }

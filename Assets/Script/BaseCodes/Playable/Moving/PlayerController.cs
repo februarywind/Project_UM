@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private Coroutine rotateCoroutine;
     private Coroutine blendCoroutine;
     private Coroutine dashCoroutine;
-    private Coroutine inputCoroutine;
 
     private void Awake()
     {
@@ -55,9 +54,9 @@ public class PlayerController : MonoBehaviour
 
         stateHandlerDic.Add(EPlayerState.Idle, IdleHandler);
         stateHandlerDic.Add(EPlayerState.Walk, WalkHandler);
-        stateHandlerDic.Add(EPlayerState.Dash, DashHandler);
-        stateHandlerDic.Add(EPlayerState.Atack, AtackHandler);
-        stateHandlerDic.Add(EPlayerState.Jump, JumpHandler);
+        stateHandlerDic.Add(EPlayerState.Dash, () => DashHandler());
+        stateHandlerDic.Add(EPlayerState.Atack, () => AtackHandler());
+        stateHandlerDic.Add(EPlayerState.Jump, () => JumpHandler());
         stateHandlerDic.Add(EPlayerState.BattleSkill, BattleSkillHandler);
         stateHandlerDic.Add(EPlayerState.UltimateSkill, UltimateSkillHandler);
         stateHandlerDic.Add(EPlayerState.Change, ChangeHandler);
@@ -79,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     private void UltimateSkillHandler()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !ultimateSkill.IsCoolTime)
+        if (Input.GetKeyDown(KeyCode.R))
         {
             PlayerFSM.ChangeState(EPlayerState.UltimateSkill);
         }
@@ -88,7 +87,9 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         // 이동 방향을 입력받은 추후 핸들러로 수정해야 할 듯
+#if UNITY_EDITOR
         SetMoveDir();
+#endif
         // 변경 가능한 상태들을 확인
         ConvertibleStateCheck();
         // 상태 
@@ -97,12 +98,16 @@ public class PlayerController : MonoBehaviour
         Gravity();
     }
 
-    private void SetMoveDir()
+    public void SetMoveDir(float x = 0, float z = 0)
     {
         // 입력값 받기
+#if UNITY_EDITOR
         float moveX = Input.GetAxis("Horizontal");
         float moveZ = Input.GetAxis("Vertical");
-
+#else
+        float moveX = x;
+        float moveZ = z;
+#endif
         // 카메라 기준 이동 방향 계산 (Y축 빼기)
         Vector3 camForward = cam.transform.forward.RemoveOne(RemoveDir.Y).normalized;
         Vector3 camRight = cam.transform.right.RemoveOne(RemoveDir.Y).normalized;
@@ -111,14 +116,6 @@ public class PlayerController : MonoBehaviour
         InputDir = (camForward * moveZ + camRight * moveX).normalized;
 
         IsInput = InputDir != Vector3.zero;
-
-        // 10 프레임동안 입력이 없으면 입력 없다. Idle 상태로 전환
-        //if (InputDir != Vector3.zero)
-        //{
-        //    if (inputCoroutine != null)
-        //        StopCoroutine(inputCoroutine);
-        //    inputCoroutine = StartCoroutine(InputCheck(10));
-        //}
     }
 
     private void ConvertibleStateCheck()
@@ -144,26 +141,26 @@ public class PlayerController : MonoBehaviour
             PlayerFSM.ChangeState(EPlayerState.Walk);
     }
 
-    private void DashHandler()
+    public void DashHandler(bool button = false)
     {
-        if (!Input.GetKeyDown(KeyCode.LeftShift) || dashCoroutine != null)
+        if (!(Input.GetKeyDown(KeyCode.LeftShift) || button) || dashCoroutine != null)
             return;
         PlayerFSM.ChangeState(EPlayerState.Dash);
         dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
     }
 
-    private void JumpHandler()
+    public void JumpHandler(bool button = false)
     {
-        if (Input.GetKeyDown(KeyCode.Space) && IsGround())
+        if ((Input.GetKeyDown(KeyCode.Space) || button) && IsGround())
         {
             gravityVelocity = movingStat.JumpHeight;
             PlayerFSM.ChangeState(EPlayerState.Jump);
         }
     }
 
-    private void AtackHandler()
+    public void AtackHandler(bool button = false)
     {
-        if (Input.GetMouseButtonDown(0))
+        if (button)
         {
             PlayerFSM.ChangeState(EPlayerState.Atack);
         }
@@ -171,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
     private void BattleSkillHandler()
     {
-        if (Input.GetKeyDown(KeyCode.E) && !battleSkill.IsCoolTime)
+        if (Input.GetKeyDown(KeyCode.E))
         {
             PlayerFSM.ChangeState(EPlayerState.BattleSkill);
         }

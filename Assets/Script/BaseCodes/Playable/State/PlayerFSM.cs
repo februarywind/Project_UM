@@ -8,7 +8,7 @@ public enum EPlayerState
 public class PlayerFSM
 {
     private PlayerStateBase curState;
-    private EPlayerState curEState = EPlayerState.Stop;
+    public EPlayerState curEState { get; private set; } = EPlayerState.Stop;
     public EPlayerState BeforeState;
     private PlayerStateBase[] playerStates = new PlayerStateBase[(int)EPlayerState.Size];
     public PlayerFSM(PlayerController controller, PlayerMovingStat characterStat, Animator animator, BattleSkillBase battleSkill, UltimateSkillBase ultimateSkill)
