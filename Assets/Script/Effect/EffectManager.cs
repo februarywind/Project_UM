@@ -45,7 +45,7 @@ public class EffectManager : MonoBehaviour
             particlePrefab = Resources.Load<GameObject>($"Effect/{particleName}");
             if (!particlePrefab)
             {
-                Debug.LogWarning("Resources¿¡¼­ ¾ø´Â ÆÄÆ¼Å¬À» È£Ãâ");
+                Debug.LogWarning("Resourcesì— ì—†ëŠ” íŒŒí‹°í´");
                 return;
             }
 
