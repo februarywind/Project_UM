@@ -10,6 +10,7 @@ public class SkillController : MonoBehaviour
     [SerializeField] Button attackButton;
     [SerializeField] Button dashButton;
     [SerializeField] Button jumpButton;
+    [SerializeField] Button changeButton;
 
     private PlayableCharacterChange playable;
 
@@ -22,6 +23,7 @@ public class SkillController : MonoBehaviour
         attackButton.onClick.AddListener(AttackSkill);
         dashButton.onClick.AddListener(DashSkill);
         jumpButton.onClick.AddListener(JumpSkill);
+        changeButton.onClick.AddListener(ChangeSkill);
     }
     /// <summary>
     /// 코루틴을 대신 실행해주는 함수
@@ -62,5 +64,9 @@ public class SkillController : MonoBehaviour
     private void JumpSkill()
     {
         playable.CurController.JumpHandler(true);
+    }
+    private void ChangeSkill()
+    {
+        playable.CurController.ChangeHandler(true);
     }
 }

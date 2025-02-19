@@ -41,6 +41,7 @@ public class UI_Joystick : MonoBehaviour
         // Handle 위치 설정
         _handle.anchoredPosition = _touch * _widthHalf;
 
+        _touch = _touch.normalized;
         characterChange.CurController.SetMoveDir(_touch.x, _touch.y);
     }
 

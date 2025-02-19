@@ -59,7 +59,10 @@ public class PlayerController : MonoBehaviour
         stateHandlerDic.Add(EPlayerState.Jump, () => JumpHandler());
         stateHandlerDic.Add(EPlayerState.BattleSkill, BattleSkillHandler);
         stateHandlerDic.Add(EPlayerState.UltimateSkill, UltimateSkillHandler);
-        stateHandlerDic.Add(EPlayerState.Change, ChangeHandler);
+        stateHandlerDic.Add(EPlayerState.Change, () => ChangeHandler());
+
+        //저프레임 테스트
+        //Application.targetFrameRate = 40;
     }
 
     private void OnEnable()
@@ -68,9 +71,9 @@ public class PlayerController : MonoBehaviour
         uIController.StatView.CharacterChange(this, ultimateSkill, battleSkill);
     }
 
-    private void ChangeHandler()
+    public void ChangeHandler(bool button = false)
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab) || button)
         {
             PlayerFSM.ChangeState(EPlayerState.Change);
         }
@@ -240,9 +243,10 @@ public class PlayerController : MonoBehaviour
         // 오른손 법칙을 기억해, forward 기준으로 오른쪽이면 up, 왼쪽은 down이다.
         Vector3 axis = Vector3.Cross(transform.forward, RotateDir);
 
-        // 너무 작은 각은 움직이지 않게
-        if (targetAngle < 2f)
+        // 너무 작은 각은 움직이지 않도록
+        if (targetAngle < 10f)
         {
+            transform.RotateAround(transform.position, axis, targetAngle);
             rotateCoroutine = null;
             yield break;
         }
@@ -257,6 +261,8 @@ public class PlayerController : MonoBehaviour
 
             yield return null;
         }
+        // 각도 보정
+        transform.RotateAround(transform.position, axis, targetAngle - angle);
 
         rotateCoroutine = null;
     }
@@ -271,8 +277,7 @@ public class PlayerController : MonoBehaviour
 
         // 상승인가 하강인가.
         bool isUp = (value - nowValue) > 0;
-
-        while (Mathf.Abs(value - nowValue) > 0.1f)
+        while (isUp ? value > nowValue : value < nowValue)
         {
             Animator.SetFloat("Speed", nowValue);
 
