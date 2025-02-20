@@ -1,4 +1,7 @@
+using NUnit.Framework.Constraints;
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using Unity.Behavior;
 using Unity.Properties;
 using UnityEngine;
@@ -10,6 +13,9 @@ public partial class MagicAttackAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
+
+    [SerializeReference] public BlackboardVariable<float> Count = new(3);
+    [SerializeReference] public BlackboardVariable<float> NextComboDelay = new(0.5f);
 
     [SerializeReference] public BlackboardVariable<float> Damage = new(15);
     [SerializeReference] public BlackboardVariable<float> Radius = new(2);
@@ -26,9 +32,7 @@ public partial class MagicAttackAction : Action
             targetLayer = LayerMask.GetMask("Playable");
             monsterController = Self.Value.GetComponent<MonsterController>();
         }
-
-        Vector3 skillPos = Target.Value.transform.position.RemoveOne(RemoveDir.Y);
-        monsterController.MonsterSkill(skillPos, delay, Radius, () => MagicAttack(skillPos));
+        monsterController.CoroutineAgent(MagicAttack());
 
         return Status.Running;
     }
@@ -43,6 +47,16 @@ public partial class MagicAttackAction : Action
             {
                 damagable.TakeDamage(Damage, EAtackElement.Normal);
             }
+        }
+    }
+
+    IEnumerator MagicAttack()
+    {
+        for (int i = 0; i < Count; i++)
+        {
+            Vector3 skillPos = Target.Value.transform.position.RemoveOne(RemoveDir.Y);
+            monsterController.MonsterSkill(skillPos, delay, Radius, () => MagicAttack(skillPos));
+            yield return Utill.GetDelay(NextComboDelay);
         }
     }
 }

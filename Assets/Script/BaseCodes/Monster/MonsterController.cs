@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Behavior;
@@ -47,5 +48,10 @@ public class MonsterController : MonoBehaviour
     private void Monster_HpChange(float curHp)
     {
         hpSlider.value = curHp;
+    }
+
+    public void CoroutineAgent(IEnumerator enumerator)
+    {
+        StartCoroutine(enumerator);
     }
 }

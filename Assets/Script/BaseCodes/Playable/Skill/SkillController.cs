@@ -26,7 +26,7 @@ public class SkillController : MonoBehaviour
         changeButton.onClick.AddListener(ChangeSkill);
     }
     /// <summary>
-    /// ÄÚ·çÆ¾À» ´ë½Å ½ÇÇàÇØÁÖ´Â ÇÔ¼ö
+    /// ì½”ë£¨í‹´ ëŒ€ì‹  ì‹¤í–‰í•´ë“œë¦½ë‹ˆë‹¤.
     /// </summary>
     /// <param name="enumerator"></param>
     public void CoroutineAgent(IEnumerator enumerator)
@@ -34,7 +34,7 @@ public class SkillController : MonoBehaviour
         StartCoroutine(enumerator);
     }
 
-    // ¹öÆ°À¸·Î »óÅÂº¯°æ
+    // ìƒíƒœë³€ê²½ ë²„íŠ¼ ë©”ì„œë“œë“¤
     private void UltimateSkill()
     {
         if (playable.CurController.ConvertibleStates.Contains(EPlayerState.UltimateSkill))
