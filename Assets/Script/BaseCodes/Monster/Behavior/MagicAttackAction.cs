@@ -1,9 +1,8 @@
 using System;
 using Unity.Behavior;
+using Unity.Properties;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
-using Unity.Properties;
-using Unity.VisualScripting;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "MagicAttack", story: "[Self] is MagicAttack This [Target]", category: "Action", id: "cf5a47cfb815d3b5591cc4983801e297")]
@@ -36,8 +35,8 @@ public partial class MagicAttackAction : Action
 
     private void MagicAttack(Vector3 pos)
     {
-        // 눈에 보이는 것 보다 범위가 크다. 왜 이럴까
-        foreach (var item in Physics.OverlapSphere(pos, Radius, targetLayer))
+        // Shpere 오브젝트의 Scale이 1일 때 반지름이 0.5임 OverlapSphere의 Radius는 반지름을 입력 해야 함 스케일이 1인 Shpere와 같은 크기의 Overlap을 원한다면 0.5를 써야함
+        foreach (var item in Physics.OverlapSphere(pos, Radius * 0.5f, targetLayer))
         {
             IDamagable damagable = item.GetComponent<IDamagable>();
             if (damagable != null)
