@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3192a4ba462969a49a59547770d10bac, type: 3}
   m_Name: M_StatModel
   m_EditorClassIdentifier: 
+  level: 0
   statPers:
   - 0
   - 0
@@ -22,6 +23,6 @@ MonoBehaviour:
   - 0
   maxHp: 100
   maxStamina: 99
-  attackPower: 10
+  attackPower: 51.72
   curHp: 100
   curStamina: 0

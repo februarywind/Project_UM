@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -12,11 +13,8 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
-        brain = Camera.main.GetComponent<CinemachineBrain>();
-        cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
-        orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
-        inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
-        follow = cinemachineCamera.Follow;
+        // 시네머신 컴포넌트가 Start에서 안 가져와짐 왜일까. 
+        StartCoroutine(LateStart());
     }
 
     private void Update()
@@ -41,5 +39,15 @@ public class CameraController : MonoBehaviour
     public void CameraInput(bool isOn)
     {
         inputAxisController.enabled = isOn;
+    }
+
+    IEnumerator LateStart()
+    {
+        yield return Utill.GetDelay(0.5f);
+        brain = Camera.main.GetComponent<CinemachineBrain>();
+        cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
+        orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
+        inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
+        follow = cinemachineCamera.Follow;
     }
 }

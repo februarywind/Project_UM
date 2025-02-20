@@ -16,11 +16,11 @@ public class PlayableStat : ScriptableObject
     [SerializeField] int level;
     public int Level => level;
 
-    [Header("�߰� �ɷ�ġ")]
+    [Header("추가 능력치")]
     [SerializeField] float[] statPers = new float[(int)PerStat.Size];
     [SerializeField] float[] fixedstats = new float[(int)FixedStat.Size];
 
-    [Header("�ִ� �ɷ�ġ")]
+    [Header("최대 능력치")]
 
     [SerializeField] float maxHp;
     public float MaxHp
@@ -51,7 +51,7 @@ public class PlayableStat : ScriptableObject
         }
     }
 
-    [Header("�ǽð� �ɷ�ġ")]
+    [Header("실시간 능력치")]
 
     [SerializeField] float curHp;
     public float CurHp
