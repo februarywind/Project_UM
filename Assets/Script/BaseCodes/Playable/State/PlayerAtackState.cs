@@ -20,9 +20,9 @@ public class PlayerAtackState : PlayerStateBase
 
     public override void OnStateUpdate()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    controller.Animator.SetInteger("Combo", ++combo);
-        //}
+        if (Input.GetMouseButtonDown(0))
+        {
+            controller.Animator.SetInteger("Combo", ++combo);
+        }
     }
 }

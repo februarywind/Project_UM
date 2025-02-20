@@ -163,7 +163,7 @@ public class PlayerController : MonoBehaviour
 
     public void AtackHandler(bool button = false)
     {
-        if (button)
+        if (button || (Cursor.lockState == CursorLockMode.Locked && Input.GetMouseButtonDown(0)))
         {
             PlayerFSM.ChangeState(EPlayerState.Atack);
         }

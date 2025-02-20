@@ -18,9 +18,14 @@ public class U_UltimateSkill : UltimateSkillBase
 
     IEnumerator U_Ultimate()
     {
+        // 무적
+        stat.IsInvincibility = true;
+
+        // 캐릭터 모델링 비활성화
         foreach (var item in invisibles)
             item.SetActive(false);
 
+        // 반환되는 int 값은 덮어써진 값의 개수
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, Vector3.up, hits, 0, skillData.TargetLayer);
         for (int i = 0; i < skillData.HitCount; i++)
         {
@@ -35,6 +40,7 @@ public class U_UltimateSkill : UltimateSkillBase
         foreach (var item in invisibles)
             item.SetActive(true);
 
+        stat.IsInvincibility = false;
         playerFSM.ChangeState(EPlayerState.Idle);
         CoolDownStart();
     }

@@ -16,9 +16,14 @@ public class M_UltimateSkill : UltimateSkillBase
 
     IEnumerator HealSkill()
     {
+        stat.IsInvincibility = true;
         yield return Utill.GetDelay(skillData.Delay);
         EffectManager.instance.ParticlePlay("Healing circle", skillData.HitCount * 0.5f, transform.position, Quaternion.identity);
+
+        // 캐릭터 비 활성화 때도 동작하도록 외부에서 코루틴을 실행함
         skillController.CoroutineAgent(UltimateSkill(transform.position));
+
+        stat.IsInvincibility = false;
         CoolDownStart();
         playerFSM.ChangeState(EPlayerState.Idle);
     }
@@ -30,7 +35,6 @@ public class M_UltimateSkill : UltimateSkillBase
             int indexLength = Physics.SphereCastNonAlloc(pos, skillData.Radius, Vector3.up, hits, skillData.Range, skillData.TargetLayer);
             for (int j = 0; j < indexLength; j++)
             {
-
                 if (1 << hits[j].transform.gameObject.layer == LayerMask.GetMask("Monster"))
                 {
                     hits[j].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Normal);

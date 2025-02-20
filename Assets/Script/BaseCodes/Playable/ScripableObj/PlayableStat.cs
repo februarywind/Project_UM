@@ -75,6 +75,11 @@ public class PlayableStat : ScriptableObject
             OnChangeCurStamina?.Invoke(CurStamina);
         }
     }
+    [Header("상태이상")]
+    public bool IsInvincibility;
+
+
+
     public void SetPerStat(PerStat statPer, float value)
     {
         statPers[(int)statPer] += value;
