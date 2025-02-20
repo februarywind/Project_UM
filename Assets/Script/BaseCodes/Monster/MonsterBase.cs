@@ -1,8 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterBase : MonoBehaviour, IDamagable
 {
+    public event Action<float> HpChange;
+
+    public float MaxHp => maxHp;
+    public float CurHp => curHp;
+
     [SerializeField] float maxHp;
     [SerializeField] float curHp;
 
@@ -26,6 +32,7 @@ public class MonsterBase : MonoBehaviour, IDamagable
             Dead();
         }
         DamagePopUpManager.instance.ShowDamagePopUp(transform.position, $"{damage}", effectColor[element]);
+        HpChange?.Invoke(curHp);
     }
     protected virtual void Dead()
     {

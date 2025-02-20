@@ -16,11 +16,11 @@ public class PlayableStat : ScriptableObject
     [SerializeField] int level;
     public int Level => level;
 
-    [Header("Ãß°¡ ´É·ÂÄ¡")]
+    [Header("ï¿½ß°ï¿½ ï¿½É·ï¿½Ä¡")]
     [SerializeField] float[] statPers = new float[(int)PerStat.Size];
     [SerializeField] float[] fixedstats = new float[(int)FixedStat.Size];
 
-    [Header("ÃÖ´ë ´É·ÂÄ¡")]
+    [Header("ï¿½Ö´ï¿½ ï¿½É·ï¿½Ä¡")]
 
     [SerializeField] float maxHp;
     public float MaxHp
@@ -51,7 +51,7 @@ public class PlayableStat : ScriptableObject
         }
     }
 
-    [Header("½Ç½Ã°£ ´É·ÂÄ¡")]
+    [Header("ï¿½Ç½Ã°ï¿½ ï¿½É·ï¿½Ä¡")]
 
     [SerializeField] float curHp;
     public float CurHp
