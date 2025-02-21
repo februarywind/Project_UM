@@ -149,10 +149,12 @@ public class PlayerController : MonoBehaviour
 
     public void DashHandler(bool button = false)
     {
-        if (!(Input.GetKeyDown(KeyCode.LeftShift) || button) || dashCoroutine != null)
+        if (!(Input.GetKeyDown(KeyCode.LeftShift) || button) || dashCoroutine != null || StatController.Stat.CurStamina < 1)
             return;
         PlayerFSM.ChangeState(EPlayerState.Dash);
         dashCoroutine = StartCoroutine(DashStart(IsInput ? InputDir : transform.forward));
+
+        StatController.Stat.CurStamina -= statController.Stat.DashStaminaValue;
     }
 
     public void JumpHandler(bool button = false)
@@ -225,6 +227,8 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DashStart(Vector3 dir)
     {
+        statController.StaminaRegenStop();
+
         float elapsedTime = 0;
         PlayerRotate(dir);
         while (elapsedTime < movingStat.DashTime)
@@ -235,6 +239,9 @@ public class PlayerController : MonoBehaviour
         }
 
         PlayerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
+
+        if (!IsInput)
+            statController.StaminaRegen();
 
         // 코루틴 종료 시간을 미뤄서 대쉬 쿨타임 생성
         yield return Utill.GetDelay(movingStat.DashCoolTime);

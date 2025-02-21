@@ -35,5 +35,7 @@ public class PlayableCharacterChange : MonoBehaviour
         after.PlayerFSM.ChangeState(EPlayerState.Idle);
 
         cameraController.CameraFollowChange(after == uController ? uCameraTarget : mCameraTarget);
+
+        after.StatController.StaminaRegen();
     }
 }

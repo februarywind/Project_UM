@@ -12,12 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3192a4ba462969a49a59547770d10bac, type: 3}
   m_Name: U_StatModel
   m_EditorClassIdentifier: 
+  level: 0
   statPers:
   - 0
   - 0
   - 0
+  fixedstats:
+  - 0
+  - 0
+  - 0
   maxHp: 100
-  curHp: 100
-  maxStamina: 0
-  curStamina: 0
+  maxStamina: 100
   attackPower: 10
+  curHp: 100
+  curStamina: 27.576069
+  IsInvincibility: 0
+  staminaRegenWaitTime: 1
+  staminaRFS: 10
+  dashStaminaValue: 20
+  runStaminaVFS: 8

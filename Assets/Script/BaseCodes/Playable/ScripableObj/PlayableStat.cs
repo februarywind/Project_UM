@@ -78,6 +78,19 @@ public class PlayableStat : ScriptableObject
     [Header("상태이상")]
     public bool IsInvincibility;
 
+    [Header("스테미나")]
+    [SerializeField] float staminaRegenWaitTime;
+    public float StaminaRegenWaitTime => staminaRegenWaitTime;
+
+    [SerializeField] float staminaRFS;
+    public float StaminaRFS => staminaRFS;
+
+    [SerializeField] float dashStaminaValue;
+    public float DashStaminaValue => dashStaminaValue;
+
+    [SerializeField] float runStaminaVFS;
+    public float RunStaminaVFS => runStaminaVFS;
+
 
 
     public void SetPerStat(PerStat statPer, float value)

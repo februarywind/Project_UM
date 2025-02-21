@@ -7,30 +7,41 @@ public class UIStatView : MonoBehaviour
 {
     [SerializeField] GameObject statPanel;
     [SerializeField] Slider hpSlider;
+    [SerializeField] Slider staminaSlider;
     [SerializeField] TMP_Text hpText;
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text attackPowerText;
     [SerializeField] Image ultimateCoolImage;
     [SerializeField] Image battleCoolImage;
 
-    private PlayableStat playableStat;
+    private PlayableStat stat;
 
     private Coroutine ultimateCoolCoroutine;
     private Coroutine battleCoolCoroutine;
 
     public void CharacterChange(PlayerController controller, UltimateSkillBase ultimate, BattleSkillBase battle)
     {
-        playableStat = controller.StatController.Stat;
+        stat = controller.StatController.Stat;
 
-        playableStat.OnChangeCurHp += Stat_OnChangeCurHp;
-        Stat_OnChangeCurHp(playableStat.CurHp);
+        stat.OnChangeCurHp += Stat_OnChangeCurHp;
+        Stat_OnChangeCurHp(stat.CurHp);
 
-        playableStat.OnChangeAttackPower += Stat_OnChangeAttackPower;
-        Stat_OnChangeAttackPower(playableStat.AttackPower);
+        stat.OnChangeAttackPower += Stat_OnChangeAttackPower;
+        Stat_OnChangeAttackPower(stat.AttackPower);
+
+        stat.OnChangeCurStamina += PlayableStat_OnChangeCurStamina;
+        PlayableStat_OnChangeCurStamina(stat.CurStamina);
 
         UI_SkillCool(ultimate.skillCoolData.CoolTime, ultimate.skillCoolData.OnSkillTime, true, ultimate.IsCoolTime);
         UI_SkillCool(battle.skillCoolData.CoolTime, battle.skillCoolData.OnSkillTime, false, battle.IsCoolTime);
     }
+
+    private void PlayableStat_OnChangeCurStamina(float curStamina)
+    {
+        staminaSlider.maxValue = stat.MaxStamina;
+        staminaSlider.value = curStamina;
+    }
+
     public void UI_SkillCool(float coolTime, float onSkillTime, bool isUltimate, bool isCoolTime)
     {
         if (isUltimate)
@@ -59,10 +70,10 @@ public class UIStatView : MonoBehaviour
 
     private void Stat_OnChangeCurHp(float curHp)
     {
-        hpSlider.maxValue = playableStat.MaxHp;
+        hpSlider.maxValue = stat.MaxHp;
         hpSlider.value = curHp;
 
-        hpText.text = $"HP : {curHp} / {playableStat.MaxHp}";
+        hpText.text = $"HP : {curHp} / {stat.MaxHp}";
     }
 
     IEnumerator SkillCoolImg(float coolTime, float onSkillTime, bool isUltimate, bool isCoolTime)
@@ -82,7 +93,7 @@ public class UIStatView : MonoBehaviour
     [ContextMenu("levelup")]
     private void TempLevelUp()
     {
-        playableStat.SetPerStat(PerStat.MaxHp, 10);
-        playableStat.SetFixedStat(FixedStat.MaxHp, 10);
+        stat.SetPerStat(PerStat.MaxHp, 10);
+        stat.SetFixedStat(FixedStat.MaxHp, 10);
     }
 }

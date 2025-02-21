@@ -22,7 +22,12 @@ MonoBehaviour:
   - 0
   - 0
   maxHp: 100
-  maxStamina: 99
+  maxStamina: 100
   attackPower: 51.72
   curHp: 100
-  curStamina: 0
+  curStamina: 12.239561
+  IsInvincibility: 0
+  staminaRegenWaitTime: 1
+  staminaRFS: 10
+  dashStaminaValue: 30
+  runStaminaVFS: 8

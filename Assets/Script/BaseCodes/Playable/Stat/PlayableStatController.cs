@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayableStatController : MonoBehaviour, IDamagable
@@ -5,9 +6,11 @@ public class PlayableStatController : MonoBehaviour, IDamagable
     [SerializeField] PlayableStat stat;
     public PlayableStat Stat => stat;
 
+    private Coroutine stamina;
+
     private void Start()
     {
-
+        stat.CurStamina = stat.MaxStamina;
         stat.OnChangeCurHp += Stat_OnChangeCurHp;
     }
 
@@ -23,5 +26,26 @@ public class PlayableStatController : MonoBehaviour, IDamagable
 
         stat.CurHp -= damage;
         DamagePopUpManager.instance.ShowDamagePopUp(transform.position, $"{damage}", Color.red);
+    }
+    public void StaminaRegen()
+    {
+        StaminaRegenStop();
+        stamina = StartCoroutine(StaminaRegenRoutine());
+    }
+    public void StaminaRegenStop()
+    {
+        if (stamina != null)
+        {
+            StopCoroutine(stamina);
+        }
+    }
+    IEnumerator StaminaRegenRoutine()
+    {
+        yield return Utill.GetDelay(stat.StaminaRegenWaitTime);
+        while (stat.MaxStamina > stat.CurStamina)
+        {
+            stat.CurStamina += stat.RunStaminaVFS * Time.deltaTime;
+            yield return null;
+        }
     }
 }
