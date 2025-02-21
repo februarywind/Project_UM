@@ -15,6 +15,8 @@ public class PlayableStat : ScriptableObject
     [Header("추가 능력치")]
     [SerializeField] float[] statPers = new float[(int)EStat.Size];
     [SerializeField] float[] fixedstats = new float[(int)EStat.Size];
+    public float[] StatPers => statPers;
+    public float[] FixedStats => fixedstats;
 
     [Header("최대 능력치")]
 
@@ -109,9 +111,11 @@ public class PlayableStat : ScriptableObject
         return fixedstats[(int)fixedStat];
     }
 
+    public event Action<int> OnChangeLevel;
     public event Action<float> OnChangeCurHp;
     public event Action<float> OnChangeCurStamina;
     public event Action<float> OnChangeAttackPower;
+    public event Action<float[]> OnChangeFixedStat;
     public event Action<float[]> OnChangePerStat;
 
     private void AllChange()
@@ -119,18 +123,23 @@ public class PlayableStat : ScriptableObject
         OnChangeCurHp?.Invoke(CurHp);
         OnChangeCurStamina?.Invoke(CurStamina);
         OnChangeAttackPower?.Invoke(AttackPower);
+        OnChangeFixedStat?.Invoke(fixedstats);
+        OnChangePerStat?.Invoke(statPers);
     }
     public void RemoveAllEvent()
     {
+        OnChangeLevel = null;
         OnChangeCurHp = null;
         OnChangeCurStamina = null;
         OnChangeAttackPower = null;
+        OnChangeFixedStat = null;
         OnChangePerStat = null;
     }
 
     public void LevelUp()
     {
         level++;
+        OnChangeLevel?.Invoke(level);
         for (int i = (int)Utill.RandomRange(1, 3); i > 0; i--)
         {
             if (Utill.IsRandom(50))
@@ -145,7 +154,7 @@ public class PlayableStat : ScriptableObject
                 EStat eStat = (EStat)Utill.RandomRange(0, (int)EStat.Size);
                 float value = Utill.RandomRange(1, 10);
                 SetPerStat(eStat, value);
-                Debug.Log($"{eStat}이 {value}상승했다.");
+                Debug.Log($"{eStat}이 {value}%상승했다.");
             }
         }
     }

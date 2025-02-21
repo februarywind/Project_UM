@@ -42,7 +42,7 @@ public class M_UltimateSkill : UltimateSkillBase
                 else
                 {
                     hits[j].transform.GetComponent<PlayerController>().StatController.Stat.CurHp += stat.AttackPower * skillData.DamageRatio;
-                    DamagePopUpManager.instance.ShowDamagePopUp(hits[j].transform.position, $"{stat.AttackPower * skillData.DamageRatio}", Color.green);
+                    DamagePopUpManager.instance.ShowDamagePopUp(hits[j].transform.position, $"{stat.AttackPower * skillData.DamageRatio:F0}", Color.green);
                 }
             }
             yield return Utill.GetDelay(0.5f);
