@@ -18,4 +18,5 @@ MonoBehaviour:
   rotateSpeed: 420
   dashTime: 0.2
   dashSpeed: 20
+  dashCoolTime: 0.5
   gravity: -9.81

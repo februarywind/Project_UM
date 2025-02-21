@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public EPlayerState[] ConvertibleStates;
     private Dictionary<EPlayerState, Action> stateHandlerDic = new();
 
-    // 물리 및 이동 관련
+    // 점프 및 낙하
     [SerializeField] private LayerMask groundLayer;
     private float gravityVelocity;
 
@@ -69,6 +69,9 @@ public class PlayerController : MonoBehaviour
     {
         // 플레이어 컨트롤러는 게임 시작과 캐릭터 변경시 OnEnable되므로 아래에 해당 메서드를 넣었음
         uIController.StatView.CharacterChange(this, ultimateSkill, battleSkill);
+
+        // 대쉬 쿨 타임 중 캐릭터 변경시 코루틴 초기화가 안됨
+        dashCoroutine = null;
     }
 
     public void ChangeHandler(bool button = false)
@@ -231,8 +234,11 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        dashCoroutine = null;
         PlayerFSM.ChangeState(IsInput ? EPlayerState.Run : EPlayerState.Idle);
+
+        // 코루틴 종료 시간을 미뤄서 대쉬 쿨타임 생성
+        yield return Utill.GetDelay(movingStat.DashCoolTime);
+        dashCoroutine = null;
     }
 
     IEnumerator CharacterRotate(Vector3 RotateDir)

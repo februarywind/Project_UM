@@ -21,6 +21,9 @@ public class PlayerMovingStat : ScriptableObject
     [SerializeField] float dashSpeed;
     public float DashSpeed => dashSpeed;
 
+    [SerializeField] float dashCoolTime;
+    public float DashCoolTime => dashCoolTime;
+
     [SerializeField] float gravity = -9.81f;
     public float Gravity => gravity;
 }
