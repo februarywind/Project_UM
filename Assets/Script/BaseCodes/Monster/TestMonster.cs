@@ -7,6 +7,7 @@ public class TestMonster : MonsterBase
     {
         base.Dead();
         killer.GetComponent<PlayableStatController>().Stat.LevelUp();
+        EffectManager.instance.ParticlePlay("Buff", 3f, killer.position, Quaternion.identity, killer);
         Invoke("ReSpwan", 5f);
     }
     private void ReSpwan()
