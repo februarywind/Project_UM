@@ -37,7 +37,7 @@ public class M_UltimateSkill : UltimateSkillBase
             {
                 if (1 << hits[j].transform.gameObject.layer == LayerMask.GetMask("Monster"))
                 {
-                    hits[j].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Normal);
+                    hits[j].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Normal, transform);
                 }
                 else
                 {

@@ -1,11 +1,7 @@
 using System;
 using UnityEngine;
 
-public enum PerStat
-{
-    MaxHp, MaxStamina, AttackPower, Size
-}
-public enum FixedStat
+public enum EStat
 {
     MaxHp, MaxStamina, AttackPower, Size
 }
@@ -17,8 +13,8 @@ public class PlayableStat : ScriptableObject
     public int Level => level;
 
     [Header("추가 능력치")]
-    [SerializeField] float[] statPers = new float[(int)PerStat.Size];
-    [SerializeField] float[] fixedstats = new float[(int)FixedStat.Size];
+    [SerializeField] float[] statPers = new float[(int)EStat.Size];
+    [SerializeField] float[] fixedstats = new float[(int)EStat.Size];
 
     [Header("최대 능력치")]
 
@@ -27,8 +23,8 @@ public class PlayableStat : ScriptableObject
     {
         get
         {
-            float baseHp = maxHp + fixedstats[(int)FixedStat.MaxHp];
-            return baseHp * (1 + GetPerStat(PerStat.MaxHp) * 0.01f);
+            float baseHp = maxHp + fixedstats[(int)EStat.MaxHp];
+            return baseHp * (1 + GetPerStat(EStat.MaxHp) * 0.01f);
         }
     }
     [SerializeField] float maxStamina;
@@ -36,8 +32,8 @@ public class PlayableStat : ScriptableObject
     {
         get
         {
-            float baseStamina = maxStamina + fixedstats[(int)FixedStat.MaxStamina];
-            return baseStamina * (1 + GetPerStat(PerStat.MaxStamina) * 0.01f);
+            float baseStamina = maxStamina + fixedstats[(int)EStat.MaxStamina];
+            return baseStamina * (1 + GetPerStat(EStat.MaxStamina) * 0.01f);
         }
     }
 
@@ -46,8 +42,8 @@ public class PlayableStat : ScriptableObject
     {
         get
         {
-            float baseAttackPower = attackPower + fixedstats[(int)FixedStat.AttackPower];
-            return baseAttackPower * (1 + GetPerStat(PerStat.AttackPower) * 0.01f);
+            float baseAttackPower = attackPower + fixedstats[(int)EStat.AttackPower];
+            return baseAttackPower * (1 + GetPerStat(EStat.AttackPower) * 0.01f);
         }
     }
 
@@ -93,22 +89,22 @@ public class PlayableStat : ScriptableObject
 
 
 
-    public void SetPerStat(PerStat statPer, float value)
+    public void SetPerStat(EStat statPer, float value)
     {
         statPers[(int)statPer] += value;
         AllChange();
     }
-    public float GetPerStat(PerStat statPer)
+    public float GetPerStat(EStat statPer)
     {
         return statPers[(int)statPer];
     }
 
-    public void SetFixedStat(FixedStat fixedStat, float value)
+    public void SetFixedStat(EStat fixedStat, float value)
     {
         fixedstats[(int)fixedStat] += value; 
         AllChange();
     }
-    public float GetFixedStat(FixedStat fixedStat)
+    public float GetFixedStat(EStat fixedStat)
     {
         return fixedstats[(int)fixedStat];
     }
@@ -130,5 +126,27 @@ public class PlayableStat : ScriptableObject
         OnChangeCurStamina = null;
         OnChangeAttackPower = null;
         OnChangePerStat = null;
+    }
+
+    public void LevelUp()
+    {
+        level++;
+        for (int i = (int)Utill.RandomRange(1, 3); i > 0; i--)
+        {
+            if (Utill.IsRandom(50))
+            {
+                EStat eStat = (EStat)Utill.RandomRange(0, (int)EStat.Size);
+                float value = Utill.RandomRange(1, 10);
+                SetFixedStat(eStat , value);
+                Debug.Log($"{eStat}이 {value}상승했다.");
+            }
+            else
+            {
+                EStat eStat = (EStat)Utill.RandomRange(0, (int)EStat.Size);
+                float value = Utill.RandomRange(1, 10);
+                SetPerStat(eStat, value);
+                Debug.Log($"{eStat}이 {value}상승했다.");
+            }
+        }
     }
 }

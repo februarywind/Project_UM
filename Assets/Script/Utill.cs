@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 public enum RemoveDir
@@ -34,5 +33,13 @@ public static class Utill
         }
         delayMap.Add(delay, new WaitForSeconds(delay));
         return delayMap[delay];
+    }
+    public static float RandomRange(float min, float max)
+    {
+        return Random.Range(min, max);
+    }
+    public static bool IsRandom(float Ratio)
+    {
+        return Random.Range(1, 100) < Ratio;
     }
 }

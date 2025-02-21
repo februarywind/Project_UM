@@ -19,7 +19,7 @@ public class PlayableStatController : MonoBehaviour, IDamagable
 
     }
 
-    public void TakeDamage(float damage, EAtackElement element)
+    public void TakeDamage(float damage, EAtackElement element, Transform transform)
     {
         if (stat.IsInvincibility)
             return;

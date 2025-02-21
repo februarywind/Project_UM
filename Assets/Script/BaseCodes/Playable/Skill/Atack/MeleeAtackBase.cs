@@ -36,7 +36,7 @@ public class MeleeAtackBase : MonoBehaviour
             // 0.5를 곱해 angle의 절반만큼의 값과 비교한다.
             if (targetAngle > meleeData.Angle * 0.5f)
                 continue;
-            col.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * meleeData.DamageRatio, EAtackElement.Normal);
+            col.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * meleeData.DamageRatio, EAtackElement.Normal, transform);
         }
     }
 

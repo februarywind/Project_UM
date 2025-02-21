@@ -45,7 +45,7 @@ public partial class MagicAttackAction : Action
             IDamagable damagable = item.GetComponent<IDamagable>();
             if (damagable != null)
             {
-                damagable.TakeDamage(Damage, EAtackElement.Normal);
+                damagable.TakeDamage(Damage, EAtackElement.Normal, Self.Value.transform);
             }
         }
     }

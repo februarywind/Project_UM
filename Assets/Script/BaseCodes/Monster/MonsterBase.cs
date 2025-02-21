@@ -24,7 +24,7 @@ public class MonsterBase : MonoBehaviour, IDamagable
         curHp = maxHp;
     }
 
-    public void TakeDamage(float damage, EAtackElement element)
+    public void TakeDamage(float damage, EAtackElement element, Transform transform)
     {
         curHp -= damage;
         if (curHp < 1)

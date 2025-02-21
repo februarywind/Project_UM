@@ -18,7 +18,7 @@ public class RangeAtackBase : MonoBehaviour
     {
         if (Physics.SphereCast(transform.position, rangeData.Radius, transform.forward, out RaycastHit hit, rangeData.Range, rangeAtackData.TargetLayer))
         {
-            hit.transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * rangeData.DamageRatio, EAtackElement.Normal);
+            hit.transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * rangeData.DamageRatio, EAtackElement.Normal, transform);
         }
     }
 

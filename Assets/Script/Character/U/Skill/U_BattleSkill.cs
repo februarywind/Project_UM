@@ -22,7 +22,7 @@ public class U_BattleSkill : BattleSkillBase
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, skillDir, hits, skillData.Range, skillData.TargetLayer);
         for (int i = 0; i < indexLength; i++)
         {
-            hits[i].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Electric);
+            hits[i].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Electric, transform);
         }
 
         playerController.characterController.excludeLayers += skillData.TargetLayer;

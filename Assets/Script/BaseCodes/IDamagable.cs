@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public enum EAtackElement
 {
     Normal, Electric, Grass, Size
@@ -5,5 +7,5 @@ public enum EAtackElement
 
 public interface IDamagable
 {
-    void TakeDamage(float damage, EAtackElement element);
+    void TakeDamage(float damage, EAtackElement element, Transform transform);
 }

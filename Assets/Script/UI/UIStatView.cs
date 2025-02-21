@@ -30,7 +30,6 @@ public class UIStatView : MonoBehaviour
         Stat_OnChangeAttackPower(stat.AttackPower);
 
         stat.OnChangeCurStamina += PlayableStat_OnChangeCurStamina;
-        PlayableStat_OnChangeCurStamina(stat.CurStamina);
 
         UI_SkillCool(ultimate.skillCoolData.CoolTime, ultimate.skillCoolData.OnSkillTime, true, ultimate.IsCoolTime);
         UI_SkillCool(battle.skillCoolData.CoolTime, battle.skillCoolData.OnSkillTime, false, battle.IsCoolTime);
@@ -88,12 +87,5 @@ public class UIStatView : MonoBehaviour
             yield return null;
         }
         image.fillAmount = 1;
-    }
-
-    [ContextMenu("levelup")]
-    private void TempLevelUp()
-    {
-        stat.SetPerStat(PerStat.MaxHp, 10);
-        stat.SetFixedStat(FixedStat.MaxHp, 10);
     }
 }
