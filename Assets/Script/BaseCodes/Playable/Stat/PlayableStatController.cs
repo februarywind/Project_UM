@@ -41,7 +41,7 @@ public class PlayableStatController : MonoBehaviour, IDamagable
     }
     IEnumerator StaminaRegenRoutine()
     {
-        yield return Utill.GetDelay(stat.StaminaRegenWaitTime);
+        yield return Util.GetDelay(stat.StaminaRegenWaitTime);
         while (stat.MaxStamina > stat.CurStamina)
         {
             stat.CurStamina += stat.RunStaminaVFS * Time.deltaTime;

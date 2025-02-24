@@ -140,19 +140,19 @@ public class PlayableStat : ScriptableObject
     {
         level++;
         OnChangeLevel?.Invoke(level);
-        for (int i = (int)Utill.RandomRange(1, 3); i > 0; i--)
+        for (int i = (int)Util.RandomRange(1, 3); i > 0; i--)
         {
-            if (Utill.IsRandom(50))
+            if (Util.IsRandom(50))
             {
-                EStat eStat = (EStat)Utill.RandomRange(0, (int)EStat.Size);
-                float value = Utill.RandomRange(1, 10);
+                EStat eStat = (EStat)Util.RandomRange(0, (int)EStat.Size);
+                float value = Util.RandomRange(1, 10);
                 SetFixedStat(eStat , value);
                 Debug.Log($"{eStat}이 {value}상승했다.");
             }
             else
             {
-                EStat eStat = (EStat)Utill.RandomRange(0, (int)EStat.Size);
-                float value = Utill.RandomRange(1, 10);
+                EStat eStat = (EStat)Util.RandomRange(0, (int)EStat.Size);
+                float value = Util.RandomRange(1, 10);
                 SetPerStat(eStat, value);
                 Debug.Log($"{eStat}이 {value}%상승했다.");
             }

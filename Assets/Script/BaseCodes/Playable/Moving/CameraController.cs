@@ -43,7 +43,7 @@ public class CameraController : MonoBehaviour
 
     IEnumerator LateStart()
     {
-        yield return Utill.GetDelay(0.1f);
+        yield return Util.GetDelay(0.1f);
         brain = Camera.main.GetComponent<CinemachineBrain>();
         cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
         orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();

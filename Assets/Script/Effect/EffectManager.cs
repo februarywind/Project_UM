@@ -73,7 +73,7 @@ public class EffectManager : MonoBehaviour
 
     IEnumerator ReturnPool(string key, GameObject particleObject, float lifeTime)
     {
-        yield return Utill.GetDelay(lifeTime);
+        yield return Util.GetDelay(lifeTime);
 
         if (!particleObject)
             yield break;

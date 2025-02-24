@@ -5,7 +5,7 @@ public enum RemoveDir
     X, Y, Z
 }
 
-public static class Utill
+public static class Util
 {
     public static Vector3 RemoveOne(this Vector3 vector3, RemoveDir removeDir)
     {

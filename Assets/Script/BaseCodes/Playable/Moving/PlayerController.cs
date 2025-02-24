@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
             statController.StaminaRegen();
 
         // 코루틴 종료 시간을 미뤄서 대쉬 쿨타임 생성
-        yield return Utill.GetDelay(movingStat.DashCoolTime);
+        yield return Util.GetDelay(movingStat.DashCoolTime);
         dashCoroutine = null;
     }
 

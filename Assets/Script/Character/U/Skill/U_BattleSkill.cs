@@ -29,7 +29,7 @@ public class U_BattleSkill : BattleSkillBase
         playerController.characterController.Move(skillDir * skillData.Range);
         playerController.characterController.excludeLayers -= skillData.TargetLayer;
 
-        yield return Utill.GetDelay(skillData.Delay);
+        yield return Util.GetDelay(skillData.Delay);
 
         playerFSM.ChangeState(EPlayerState.Idle);
 

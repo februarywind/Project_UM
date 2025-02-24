@@ -34,7 +34,7 @@ public class U_UltimateSkill : UltimateSkillBase
                 hits[j].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Electric, transform);
             }
             EffectManager.instance.ParticlePlay("Slash", 1f, transform.position + new Vector3(Random.Range(-1.5f, 1.5f), 1, Random.Range(-1.5f, 1.5f)), Quaternion.Euler(Random.Range(0, 360), Random.Range(0, 360), Random.Range(0, 360)));
-            yield return Utill.GetDelay(0.1f);
+            yield return Util.GetDelay(0.1f);
         }
 
         foreach (var item in invisibles)

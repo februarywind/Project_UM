@@ -17,7 +17,7 @@ public class M_UltimateSkill : UltimateSkillBase
     IEnumerator HealSkill()
     {
         stat.IsInvincibility = true;
-        yield return Utill.GetDelay(skillData.Delay);
+        yield return Util.GetDelay(skillData.Delay);
         EffectManager.instance.ParticlePlay("Healing circle", skillData.HitCount * 0.5f, transform.position, Quaternion.identity);
 
         // 캐릭터 비 활성화 때도 동작하도록 외부에서 코루틴을 실행함
@@ -45,7 +45,7 @@ public class M_UltimateSkill : UltimateSkillBase
                     DamagePopUpManager.instance.ShowDamagePopUp(hits[j].transform.position, $"{stat.AttackPower * skillData.DamageRatio:F0}", Color.green);
                 }
             }
-            yield return Utill.GetDelay(0.5f);
+            yield return Util.GetDelay(0.5f);
         }
     }
 }

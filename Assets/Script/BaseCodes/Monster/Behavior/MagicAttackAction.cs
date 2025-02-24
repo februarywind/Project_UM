@@ -56,7 +56,7 @@ public partial class MagicAttackAction : Action
         {
             Vector3 skillPos = Target.Value.transform.position.RemoveOne(RemoveDir.Y);
             monsterController.MonsterSkill(skillPos, delay, Radius, () => MagicAttack(skillPos));
-            yield return Utill.GetDelay(NextComboDelay);
+            yield return Util.GetDelay(NextComboDelay);
         }
     }
 }
