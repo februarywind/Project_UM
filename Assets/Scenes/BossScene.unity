@@ -12465,6 +12465,10 @@ PrefabInstance:
       propertyPath: temp
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3864468073769277947, guid: 04810bb23e990074698b41628794f245, type: 3}
+      propertyPath: sceneName
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5426108362524868840, guid: 04810bb23e990074698b41628794f245, type: 3}
       propertyPath: m_Name
       value: Potal
@@ -13850,7 +13854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   m_Graph: {fileID: -9103789956972600696, guid: 0347076ca84db854495f6ef51844836f, type: 2}
   m_BlackboardVariableOverridesList:
   - rid: 4646435424510148749
@@ -13858,7 +13861,6 @@ MonoBehaviour:
   - rid: 4785540149945565398
   m_IsInitialised: 0
   m_IsStarted: 0
-  NetcodeRunOnlyOnOwner: 0
   references:
     version: 2
     RefIds:

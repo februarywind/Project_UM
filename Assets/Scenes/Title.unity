@@ -1834,6 +1834,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   continueButton: {fileID: 2030664051}
+  settingButton: {fileID: 1666658499}
+  settingPanel: {fileID: 1826287178}
 --- !u!1 &1558296925
 GameObject:
   m_ObjectHideFlags: 0

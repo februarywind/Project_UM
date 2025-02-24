@@ -1,15 +1,11 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Potal : MonoBehaviour
 {
-    [SerializeField] int temp;
+    [SerializeField] SceneName sceneName;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (1 << other.gameObject.layer == LayerMask.GetMask("Playable"))
-        {
-            SceneManager.LoadScene(temp);
-        }
+        SceneLoadManager.Instance.MoveScene(sceneName);
     }
 }

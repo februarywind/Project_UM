@@ -11,6 +11,7 @@ public class UI_TextButton : MonoBehaviour, IPointerClickHandler, IPointerEnterH
 
     [SerializeField] TextValues pointEnter;
     [SerializeField] TextValues pointExit;
+    [SerializeField] Color disableColor = Color.gray;
 
     private TMP_Text text;
     private void Awake()
@@ -21,15 +22,30 @@ public class UI_TextButton : MonoBehaviour, IPointerClickHandler, IPointerEnterH
     {
         ClickEvent?.Invoke();
     }
+    private void Start()
+    {
+        if (ClickEvent == null)
+        {
+            text.color = disableColor;
+        }
+    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (ClickEvent == null)
+        {
+            return;
+        }
         text.DOColor(pointEnter.color, pointEnter.colorDuration);
         transform.DOScale(pointEnter.size, pointEnter.sizeDuration);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (ClickEvent == null)
+        {
+            return;
+        }
         text.DOColor(pointExit.color, pointExit.colorDuration);
         transform.DOScale(pointExit.size, pointExit.sizeDuration);
     }
