@@ -12,7 +12,7 @@ public enum SceneName
 public class SceneLoadManager : Singleton<SceneLoadManager>
 {
     [SerializeField] Image loadingPanel;
-    [SerializeField] float sceneMindelay;
+    [SerializeField] float sceneMindelay = 3f;
     [SerializeField] TMP_Text loadingText;
 
     private Coroutine sceneCoroutine;

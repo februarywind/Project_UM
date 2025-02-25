@@ -1,3 +1,4 @@
+using Unity.Behavior;
 using UnityEngine;
 
 public class PlayableCharacterChange : MonoBehaviour
@@ -24,17 +25,16 @@ public class PlayableCharacterChange : MonoBehaviour
 
         before.StatController.Stat.RemoveAllEvent();
 
-        after.transform.position = before.transform.position;
-        after.transform.rotation = before.transform.rotation;
+        cameraController.CameraFollowChange(after == uController ? uCameraTarget : mCameraTarget);
+
+        before.GetComponent<BehaviorGraphAgent>().enabled = true;
+        after.GetComponent<BehaviorGraphAgent>().enabled = false;
 
         before.PlayerFSM.ChangeState(EPlayerState.Atack);
-
-        before.gameObject.SetActive(false);
-        after.gameObject.SetActive(true);
-
         after.PlayerFSM.ChangeState(EPlayerState.Idle);
 
-        cameraController.CameraFollowChange(after == uController ? uCameraTarget : mCameraTarget);
+        before.enabled = false;
+        after.enabled = true;
 
         after.StatController.StaminaRegen();
     }

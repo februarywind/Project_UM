@@ -4231,9 +4231,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: unitychan
       objectReference: {fileID: 0}
+    - target: {fileID: 3669809060064671375, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156416492784114429, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8835467220885358321, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8835467220885358321, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4274,8 +4282,53 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3669809060064671375, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5920635980849089933}
   m_SourcePrefab: {fileID: 100100000, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
+--- !u!1 &2091243532023996186 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3669809060064671375, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
+  m_PrefabInstance: {fileID: 3452098226691615125}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5920635980849089933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2091243532023996186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: -2258673950264333532, guid: 8a62f4f28458ff5438d45297a49c51a1, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 4646435550158127519
+  - rid: 4646435550158127520
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4646435550158127519
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 2091243532023996186}
+    - rid: 4646435550158127520
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3325195764599206179
+          m_Value1: 2965270690588589204
+        Name: Playable
+        m_Value: {fileID: 4059553387588910693}
 --- !u!4 &6158025617197461348 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8835467220885358321, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
@@ -4291,8 +4344,8 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6156416492784114429, guid: a8cb7dc4901f64f4ab7d99f120f06902, type: 3}
   m_PrefabInstance: {fileID: 3452098226691615125}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_GameObject: {fileID: 2091243532023996186}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0239b6180fc6b84999064e056f466e5, type: 3}
   m_Name: 
@@ -4311,7 +4364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6535563546471815008, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6535563546471815008, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4352,19 +4405,64 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5147904385185677057, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7345428958085096157}
   m_SourcePrefab: {fileID: 100100000, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
 --- !u!4 &2708235559551325700 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6535563546471815008, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
   m_PrefabInstance: {fileID: 9162408031241273700}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4059553387588910693 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5147904385185677057, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
+  m_PrefabInstance: {fileID: 9162408031241273700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7345428958085096157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059553387588910693}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Graph: {fileID: -2258673950264333532, guid: 8a62f4f28458ff5438d45297a49c51a1, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 4646435550158128035
+  - rid: 4646435550158128036
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 4646435550158128035
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 4059553387588910693}
+    - rid: 4646435550158128036
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 3325195764599206179
+          m_Value1: 2965270690588589204
+        Name: Playable
+        m_Value: {fileID: 2091243532023996186}
 --- !u!114 &4870713021308861505 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4377312060827598117, guid: 6fafefe5e6359ed429cb13f0ec65133c, type: 3}
   m_PrefabInstance: {fileID: 9162408031241273700}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4059553387588910693}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0239b6180fc6b84999064e056f466e5, type: 3}

@@ -11,11 +11,10 @@ public partial class SetTargetDistanceAction : Action
     [SerializeReference] public BlackboardVariable<float> Distance;
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
-
-    protected override Status OnStart()
+    protected override Status OnUpdate()
     {
         Distance.Value = Vector3.Distance(Self.Value.transform.position, Target.Value.transform.position);
-        return Status.Running;
+        return Status.Success;
     }
 }
 
