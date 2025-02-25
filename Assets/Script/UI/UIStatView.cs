@@ -12,14 +12,17 @@ public class UIStatView : MonoBehaviour
     [SerializeField] Slider staminaSlider;
     // 텍스트
     [SerializeField] TMP_Text levelText;
+    [SerializeField] TMP_Text statPointText;
     [SerializeField] TMP_Text hpText;
     [SerializeField] TMP_Text staminaText;
     [SerializeField] TMP_Text attackPowerText;
-    [SerializeField] TMP_Text fixedStats;
-    [SerializeField] TMP_Text perStats;
     // 스킬 쿨 이미지
     [SerializeField] Image ultimateCoolImage;
     [SerializeField] Image battleCoolImage;
+    // 스탯 업 버튼
+    [SerializeField] Button maxHpUpButton;
+    [SerializeField] Button maxStaminaUpButton;
+    [SerializeField] Button attackUpButton;
 
     private PlayableStat stat;
 
@@ -41,28 +44,21 @@ public class UIStatView : MonoBehaviour
         stat.OnChangeLevel += Stat_OnChangeLevel;
         Stat_OnChangeLevel(stat.Level);
 
-        stat.OnChangePerStat += Stat_OnChangePerStat;
-        Stat_OnChangePerStat(stat.StatPers);
-        stat.OnChangeFixedStat += Stat_OnChangeFixedStat;
-        Stat_OnChangeFixedStat(stat.FixedStats);
-
         UI_SkillCool(ultimate.skillCoolData.CoolTime, ultimate.skillCoolData.OnSkillTime, true, ultimate.IsCoolTime);
         UI_SkillCool(battle.skillCoolData.CoolTime, battle.skillCoolData.OnSkillTime, false, battle.IsCoolTime);
-    }
 
-    private void Stat_OnChangeFixedStat(float[] obj)
-    {
-        fixedStats.text = $"HP +{obj[(int)EStat.MaxHp]:F0}\nST +{obj[(int)EStat.MaxStamina]:F0}\nAP +{obj[(int)EStat.AttackPower]:F0}";
-    }
-
-    private void Stat_OnChangePerStat(float[] obj)
-    {
-        perStats.text = $"HP +{obj[(int)EStat.MaxHp]:F0}%\nST +{obj[(int)EStat.MaxStamina]:F0}%\nAP +{obj[(int)EStat.AttackPower]:F0}%";
+        maxHpUpButton.onClick.RemoveAllListeners();
+        maxHpUpButton.onClick.AddListener(() => StatUp(EStat.MaxHp));
+        maxStaminaUpButton.onClick.RemoveAllListeners();
+        maxStaminaUpButton.onClick.AddListener(() => StatUp(EStat.MaxStamina));
+        attackUpButton.onClick.RemoveAllListeners();
+        attackUpButton.onClick.AddListener(() => StatUp(EStat.AttackPower));
     }
 
     private void Stat_OnChangeLevel(int level)
     {
         levelText.text = $"LV {level}";
+        statPointText.text = $"SP: {stat.StatPoint}";
     }
 
     private void PlayableStat_OnChangeCurStamina(float curStamina)
@@ -104,6 +100,11 @@ public class UIStatView : MonoBehaviour
         hpSlider.value = curHp;
 
         hpText.text = $"HP : {curHp:F1} / {stat.MaxHp:F1}";
+    }
+
+    private void StatUp(EStat eStat)
+    {
+        stat.StatUp(eStat);
     }
 
     IEnumerator SkillCoolImg(float coolTime, float onSkillTime, bool isUltimate, bool isCoolTime)

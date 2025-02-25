@@ -12,42 +12,22 @@ public class PlayableStat : ScriptableObject
     [SerializeField] int level;
     public int Level => level;
 
+    public int StatPoint;
+
+    [SerializeField] float[] statUpValue = new float[(int)EStat.Size];
+
     [Header("추가 능력치")]
-    [SerializeField] float[] statPers = new float[(int)EStat.Size];
-    [SerializeField] float[] fixedstats = new float[(int)EStat.Size];
-    public float[] StatPers => statPers;
-    public float[] FixedStats => fixedstats;
+    [SerializeField] float[] levelUpStats = new float[(int)EStat.Size];
 
     [Header("최대 능력치")]
 
     [SerializeField] float maxHp;
-    public float MaxHp
-    {
-        get
-        {
-            float baseHp = maxHp + fixedstats[(int)EStat.MaxHp];
-            return baseHp * (1 + GetPerStat(EStat.MaxHp) * 0.01f);
-        }
-    }
+    public float MaxHp { get => maxHp + levelUpStats[(int)EStat.MaxHp]; }
     [SerializeField] float maxStamina;
-    public float MaxStamina
-    {
-        get
-        {
-            float baseStamina = maxStamina + fixedstats[(int)EStat.MaxStamina];
-            return baseStamina * (1 + GetPerStat(EStat.MaxStamina) * 0.01f);
-        }
-    }
+    public float MaxStamina { get => maxStamina + levelUpStats[(int)EStat.MaxStamina]; }
 
     [SerializeField] float attackPower;
-    public float AttackPower
-    {
-        get
-        {
-            float baseAttackPower = attackPower + fixedstats[(int)EStat.AttackPower];
-            return baseAttackPower * (1 + GetPerStat(EStat.AttackPower) * 0.01f);
-        }
-    }
+    public float AttackPower { get => attackPower + levelUpStats[(int)EStat.AttackPower]; }
 
     [Header("실시간 능력치")]
 
@@ -89,42 +69,18 @@ public class PlayableStat : ScriptableObject
     [SerializeField] float runStaminaVFS;
     public float RunStaminaVFS => runStaminaVFS;
 
-
-
-    public void SetPerStat(EStat statPer, float value)
-    {
-        statPers[(int)statPer] += value;
-        AllChange();
-    }
-    public float GetPerStat(EStat statPer)
-    {
-        return statPers[(int)statPer];
-    }
-
-    public void SetFixedStat(EStat fixedStat, float value)
-    {
-        fixedstats[(int)fixedStat] += value; 
-        AllChange();
-    }
-    public float GetFixedStat(EStat fixedStat)
-    {
-        return fixedstats[(int)fixedStat];
-    }
-
     public event Action<int> OnChangeLevel;
     public event Action<float> OnChangeCurHp;
     public event Action<float> OnChangeCurStamina;
     public event Action<float> OnChangeAttackPower;
     public event Action<float[]> OnChangeFixedStat;
-    public event Action<float[]> OnChangePerStat;
 
     private void AllChange()
     {
         OnChangeCurHp?.Invoke(CurHp);
         OnChangeCurStamina?.Invoke(CurStamina);
         OnChangeAttackPower?.Invoke(AttackPower);
-        OnChangeFixedStat?.Invoke(fixedstats);
-        OnChangePerStat?.Invoke(statPers);
+        OnChangeFixedStat?.Invoke(levelUpStats);
     }
     public void RemoveAllEvent()
     {
@@ -133,29 +89,22 @@ public class PlayableStat : ScriptableObject
         OnChangeCurStamina = null;
         OnChangeAttackPower = null;
         OnChangeFixedStat = null;
-        OnChangePerStat = null;
     }
 
     public void LevelUp()
     {
         level++;
+        StatPoint++;
         OnChangeLevel?.Invoke(level);
-        for (int i = (int)Util.RandomRange(1, 3); i > 0; i--)
+    }
+    public void StatUp(EStat stat)
+    {
+        if (StatPoint < 1)
         {
-            if (Util.IsRandom(50))
-            {
-                EStat eStat = (EStat)Util.RandomRange(0, (int)EStat.Size);
-                float value = Util.RandomRange(1, 10);
-                SetFixedStat(eStat , value);
-                Debug.Log($"{eStat}이 {value}상승했다.");
-            }
-            else
-            {
-                EStat eStat = (EStat)Util.RandomRange(0, (int)EStat.Size);
-                float value = Util.RandomRange(1, 10);
-                SetPerStat(eStat, value);
-                Debug.Log($"{eStat}이 {value}%상승했다.");
-            }
+            return;
         }
+        StatPoint--;
+        levelUpStats[(int)stat] += statUpValue[(int)stat];
+        AllChange();
     }
 }

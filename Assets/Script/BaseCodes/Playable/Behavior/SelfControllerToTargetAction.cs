@@ -52,6 +52,7 @@ public partial class SelfControllerToTargetAction : Action
         {
             return Status.Failure;
         }
+        playerController.Animator.Play("Blend Tree", 0);
         playerController.MoveAnimationPlay(AnimatorValue);
         return Status.Running;
     }
