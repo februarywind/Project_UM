@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   coolTime: 5
   damageRatio: 2
-  radius: 1
+  radius: 0.5
   range: 5
-  delay: 0.1
+  delay: 1
   maxTarget: 5
   hitCount: 0
   targetLayer:

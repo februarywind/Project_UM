@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: M_StatModel
   m_EditorClassIdentifier: 
   level: 1
-  statPers:
-  - 0
-  - 0
-  - 0
-  fixedstats:
+  StatPoint: 0
+  statUpValue:
+  - 10
+  - 10
+  - 5
+  levelUpStats:
   - 0
   - 0
   - 0

@@ -5,9 +5,12 @@ public class M_UltimateSkill : UltimateSkillBase
 {
     private RaycastHit[] hits;
 
+    private SkillCamera skillCamera;
+
     private void Awake()
     {
         hits = new RaycastHit[skillData.MaxTarget];
+        skillCamera = GetComponent<SkillCamera>();
     }
     public override void UltimateSkillActivate()
     {
@@ -17,6 +20,8 @@ public class M_UltimateSkill : UltimateSkillBase
     IEnumerator HealSkill()
     {
         stat.IsInvincibility = true;
+        skillCamera.UtimateViewCamera(true);
+        playerController.Animator.SetTrigger("Ultimate");
         yield return Util.GetDelay(skillData.Delay);
         EffectManager.instance.ParticlePlay("Healing circle", skillData.HitCount * 0.5f, transform.position, Quaternion.identity);
 
@@ -26,6 +31,8 @@ public class M_UltimateSkill : UltimateSkillBase
         stat.IsInvincibility = false;
         CoolDownStart();
         playerFSM.ChangeState(EPlayerState.Idle);
+
+        skillCamera.UtimateViewCamera(false);
     }
 
     public IEnumerator UltimateSkill(Vector3 pos)

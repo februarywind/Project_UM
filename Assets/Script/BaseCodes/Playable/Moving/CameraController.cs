@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading.Tasks;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -11,10 +12,16 @@ public class CameraController : MonoBehaviour
 
     private Transform follow;
 
-    private void Start()
+    private async void Start()
     {
-        // 시네머신 컴포넌트가 Start에서 안 가져와짐 왜일까. 
-        StartCoroutine(LateStart());
+        // 시네머신이 한번에 안 가져와져서 딜레이를 넣음
+        await Task.Delay(100);
+
+        brain = Camera.main.GetComponent<CinemachineBrain>();
+        cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
+        orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
+        inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
+        follow = cinemachineCamera.Follow;
     }
 
     private void Update()
@@ -39,15 +46,5 @@ public class CameraController : MonoBehaviour
     public void CameraInput(bool isOn)
     {
         inputAxisController.enabled = isOn;
-    }
-
-    IEnumerator LateStart()
-    {
-        yield return Util.GetDelay(0.1f);
-        brain = Camera.main.GetComponent<CinemachineBrain>();
-        cinemachineCamera = brain.ActiveVirtualCamera as CinemachineCamera;
-        orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
-        inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
-        follow = cinemachineCamera.Follow;
     }
 }

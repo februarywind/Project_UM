@@ -18,6 +18,7 @@ public class M_BattleSkill : BattleSkillBase
 
     IEnumerator HealSkill()
     {
+        playerController.Animator.SetTrigger("Heal");
         float healValue = stat.AttackPower * skillData.DamageRatio;
         yield return Util.GetDelay(skillData.Delay);
         EffectManager.instance.ParticlePlay("Healing", 2, transform.position, Quaternion.identity, transform);

@@ -20,11 +20,20 @@ public class UIController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-                infoPanel.SetActive(!infoPanel.activeSelf);
+            if (infoPanel.activeSelf)
+            {
+                infoPanel.SetActive(false);
+                statView.CurController.GetComponent<SkillCamera>().StatViewCamera(false);
+            }
+            else
+            {
+                infoPanel.SetActive(true);
+                statView.CurController.GetComponent<SkillCamera>().StatViewCamera(true);
+            }
         }
     }
     private void OpenStat()
     {
-                infoPanel.SetActive(!infoPanel.activeSelf);
+        infoPanel.SetActive(!infoPanel.activeSelf);
     }
 }

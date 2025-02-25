@@ -17,8 +17,10 @@ public class U_BattleSkill : BattleSkillBase
 
     IEnumerator DashSkill()
     {
+        playerController.Animator.SetTrigger("Battle");
+        yield return Util.GetDelay(skillData.Delay);
         Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
-        EffectManager.instance.ParticlePlay("Plexus", 3f, transform.position + skillDir * skillData.Range, Quaternion.LookRotation(skillDir) * Quaternion.Euler(90, 0, 0));
+        EffectManager.instance.ParticlePlay("Flares", 1f, Vector3.up * 0.5f + transform.position + skillDir * skillData.Range / 2, Quaternion.LookRotation(skillDir) * Quaternion.Euler(0, 90, 0));
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, skillDir, hits, skillData.Range, skillData.TargetLayer);
         for (int i = 0; i < indexLength; i++)
         {
@@ -28,8 +30,6 @@ public class U_BattleSkill : BattleSkillBase
         playerController.characterController.excludeLayers += skillData.TargetLayer;
         playerController.characterController.Move(skillDir * skillData.Range);
         playerController.characterController.excludeLayers -= skillData.TargetLayer;
-
-        yield return Util.GetDelay(skillData.Delay);
 
         playerFSM.ChangeState(EPlayerState.Idle);
 

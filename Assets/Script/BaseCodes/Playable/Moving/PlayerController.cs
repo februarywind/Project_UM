@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     // 입력 관련 변수
     public Vector3 InputDir { get; private set; }
     public bool IsInput { get; private set; }
+    public bool IsControl = true;
 
     // 캐릭터 상태 및 애니메이션
     public Animator Animator { get; private set; }
@@ -92,6 +93,11 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (!IsControl)
+        {
+            return;
+        }
+
         // 이동 방향을 입력받은 추후 핸들러로 수정해야 할 듯
 #if UNITY_EDITOR
         SetMoveDir();

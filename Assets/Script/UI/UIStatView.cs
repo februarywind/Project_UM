@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 public class UIStatView : MonoBehaviour
@@ -29,8 +30,12 @@ public class UIStatView : MonoBehaviour
     private Coroutine ultimateCoolCoroutine;
     private Coroutine battleCoolCoroutine;
 
+    public PlayerController CurController { get; private set; }
+
     public void CharacterChange(PlayerController controller, UltimateSkillBase ultimate, BattleSkillBase battle)
     {
+        CurController = controller;
+
         stat = controller.StatController.Stat;
 
         stat.OnChangeCurHp += Stat_OnChangeCurHp;

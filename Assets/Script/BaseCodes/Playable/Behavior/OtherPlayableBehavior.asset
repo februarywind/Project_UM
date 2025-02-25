@@ -40,7 +40,7 @@ MonoBehaviour:
           rid: 4785540270059421699
         m_EndedNodes:
           rid: 4785540270059421700
-        m_VersionTimestamp: 638760949407280592
+        m_VersionTimestamp: 638760977157910062
     - rid: 4785540270059421697
       type: {class: ParallelAllComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -570,7 +570,7 @@ MonoBehaviour:
   - rid: 4646435550158127358
   - rid: 4646435550158127572
   - rid: 4646435550158127862
-  m_VersionTimestamp: 638760963406739736
+  m_VersionTimestamp: 638760977157910062
   m_DebugInfo: {fileID: 255160831234190095}
   m_RuntimeGraph: {fileID: -2258673950264333532}
   AssetID:
