@@ -12,8 +12,16 @@ public class AudioSetting : MonoBehaviour
 
     private void Awake()
     {
+        masterSlider.value = PlayerPrefs.HasKey("Master") ? PlayerPrefs.GetFloat("Master") : 0.5f;
+        MasterValueChanged(masterSlider.value);
         masterSlider.onValueChanged.AddListener(MasterValueChanged);
+
+        sfxSlider.value = PlayerPrefs.HasKey("SFX") ? PlayerPrefs.GetFloat("SFX") : 0.5f;
+        SfxValueChanged(sfxSlider.value);
         sfxSlider.onValueChanged.AddListener(SfxValueChanged);
+
+        bgmSlider.value = PlayerPrefs.HasKey("BGM") ? PlayerPrefs.GetFloat("BGM") : 0.5f;
+        BGMValueChanged(bgmSlider.value);
         bgmSlider.onValueChanged.AddListener(BGMValueChanged);
     }
 
@@ -31,5 +39,12 @@ public class AudioSetting : MonoBehaviour
     private void BGMValueChanged(float value)
     {
         audioMixer.SetFloat("BGM", Mathf.Log10(value) * 20);
+    }
+    public void CloseSetting()
+    {
+        gameObject.SetActive(false);
+        PlayerPrefs.SetFloat("Master", masterSlider.value);
+        PlayerPrefs.SetFloat("SFX", sfxSlider.value);
+        PlayerPrefs.SetFloat("BGM", bgmSlider.value);
     }
 }
