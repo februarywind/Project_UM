@@ -40,7 +40,6 @@ public class PlayerController : MonoBehaviour
     private UIController uIController;
 
     // 코루틴 관리
-    private Coroutine rotateCoroutine;
     private Coroutine blendCoroutine;
     private Coroutine dashCoroutine;
 
@@ -197,12 +196,21 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerRotate(Vector3 moveDir)
     {
-        // 캐릭터 회전 (움직이는 방향을 바라보도록)
-        if (rotateCoroutine != null)
+        // 두 벡터의 사이의 각을 구한다.
+        float targetAngle = Vector3.Angle(transform.forward, moveDir);
+        // 오른손 법칙을 기억해, forward 기준으로 오른쪽이면 up, 왼쪽은 down이다.
+        Vector3 axis = Vector3.Cross(transform.forward, moveDir);
+
+        // 너무 작은 각은 움직이지 않도록
+        if (targetAngle < 10f)
         {
-            StopCoroutine(rotateCoroutine);
+            transform.RotateAround(transform.position, axis, targetAngle);
+            return;
         }
-        rotateCoroutine = StartCoroutine(CharacterRotate(moveDir));
+        float angleSpeed = movingStat.RotateSpeed * Time.deltaTime;
+
+        // 기준점, 회전축, 속도
+        transform.RotateAround(transform.position, axis, angleSpeed);
     }
 
     private void Gravity()
@@ -254,38 +262,6 @@ public class PlayerController : MonoBehaviour
         dashCoroutine = null;
     }
 
-    IEnumerator CharacterRotate(Vector3 RotateDir)
-    {
-        float angle = 0;
-        // 두 벡터의 사이의 각을 구한다.
-        float targetAngle = Vector3.Angle(transform.forward, RotateDir);
-        // 오른손 법칙을 기억해, forward 기준으로 오른쪽이면 up, 왼쪽은 down이다.
-        Vector3 axis = Vector3.Cross(transform.forward, RotateDir);
-
-        // 너무 작은 각은 움직이지 않도록
-        if (targetAngle < 10f)
-        {
-            transform.RotateAround(transform.position, axis, targetAngle);
-            rotateCoroutine = null;
-            yield break;
-        }
-        while (angle < targetAngle)
-        {
-            float angleSpeed = movingStat.RotateSpeed * Time.deltaTime;
-
-            // 기준점, 회전축, 속도
-            transform.RotateAround(transform.position, axis, angleSpeed);
-
-            angle += angleSpeed;
-
-            yield return null;
-        }
-        // 각도 보정
-        transform.RotateAround(transform.position, axis, targetAngle - angle);
-
-        rotateCoroutine = null;
-    }
-
     IEnumerator SetBlendValue(float value)
     {
         float nowValue = Animator.GetFloat("Speed");
@@ -307,16 +283,6 @@ public class PlayerController : MonoBehaviour
         }
         Animator.SetFloat("Speed", value);
         blendCoroutine = null;
-    }
-
-    IEnumerator InputCheck(int frame)
-    {
-        IsInput = true;
-        for (int i = 0; i < frame; i++)
-        {
-            yield return null;
-        }
-        IsInput = false;
     }
 
     // 애니메이션 이벤트
