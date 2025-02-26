@@ -25,7 +25,7 @@ public class PlayableStatController : MonoBehaviour, IDamagable
             return;
 
         stat.CurHp -= damage;
-        DamagePopUpManager.instance.ShowDamagePopUp(transform.position, $"{damage}", Color.red);
+        DamagePopUpManager.instance.ShowDamagePopUp(this.transform.position, $"{damage}", Color.red);
     }
     public void StaminaRegen()
     {

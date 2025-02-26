@@ -244,7 +244,7 @@ public class PlayerController : MonoBehaviour
         statController.StaminaRegenStop();
 
         float elapsedTime = 0;
-        PlayerRotate(dir);
+        transform.RotateAround(transform.position, Vector3.up, Vector3.Angle(transform.forward, dir));
         while (elapsedTime < movingStat.DashTime)
         {
             characterController.Move(((dir * movingStat.DashSpeed) + Vector3.up * gravityVelocity) * Time.deltaTime);

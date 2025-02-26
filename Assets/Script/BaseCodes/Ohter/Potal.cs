@@ -6,6 +6,10 @@ public class Potal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!other.GetComponent<PlayerController>().enabled)
+        {
+            return;
+        }
         SceneLoadManager.Instance.MoveScene(sceneName);
     }
 }
