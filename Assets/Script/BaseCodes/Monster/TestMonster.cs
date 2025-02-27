@@ -12,7 +12,7 @@ public class TestMonster : MonsterBase
     }
     private void ReSpwan()
     {
-        maxHp += 100;
+        maxHp += 0;
         gameObject.SetActive(true);
     }
 }

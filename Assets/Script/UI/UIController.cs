@@ -24,11 +24,13 @@ public class UIController : MonoBehaviour
             {
                 infoPanel.SetActive(false);
                 statView.CurController.GetComponent<SkillCamera>().StatViewCamera(false);
+                Cursor.lockState = CursorLockMode.Locked;
             }
             else
             {
                 infoPanel.SetActive(true);
                 statView.CurController.GetComponent<SkillCamera>().StatViewCamera(true);
+                Cursor.lockState = CursorLockMode.None;
             }
         }
     }

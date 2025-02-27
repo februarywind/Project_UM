@@ -12,20 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3192a4ba462969a49a59547770d10bac, type: 3}
   m_Name: M_StatModel
   m_EditorClassIdentifier: 
-  level: 1
+  level: 2
   StatPoint: 0
   statUpValue:
   - 10
   - 10
-  - 5
+  - 3
   levelUpStats:
   - 0
   - 0
-  - 0
+  - 3
   maxHp: 100
   maxStamina: 100
   attackPower: 5
-  curHp: 100
+  curHp: 0
   curStamina: 100
   IsInvincibility: 0
   staminaRegenWaitTime: 1

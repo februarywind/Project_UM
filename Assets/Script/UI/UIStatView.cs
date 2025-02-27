@@ -45,9 +45,13 @@ public class UIStatView : MonoBehaviour
         Stat_OnChangeAttackPower(stat.AttackPower);
 
         stat.OnChangeCurStamina += PlayableStat_OnChangeCurStamina;
+        PlayableStat_OnChangeCurStamina(stat.CurStamina);
 
         stat.OnChangeLevel += Stat_OnChangeLevel;
         Stat_OnChangeLevel(stat.Level);
+
+        stat.OnChangeStatPoint += Stat_OnChangeStatPoint;
+        Stat_OnChangeStatPoint(stat.StatPoint);
 
         UI_SkillCool(ultimate.skillCoolData.CoolTime, ultimate.skillCoolData.OnSkillTime, true, ultimate.IsCoolTime);
         UI_SkillCool(battle.skillCoolData.CoolTime, battle.skillCoolData.OnSkillTime, false, battle.IsCoolTime);
@@ -58,6 +62,11 @@ public class UIStatView : MonoBehaviour
         maxStaminaUpButton.onClick.AddListener(() => StatUp(EStat.MaxStamina));
         attackUpButton.onClick.RemoveAllListeners();
         attackUpButton.onClick.AddListener(() => StatUp(EStat.AttackPower));
+    }
+
+    private void Stat_OnChangeStatPoint(int statPoint)
+    {
+        statPointText.text = $"SP: {statPoint}";
     }
 
     private void Stat_OnChangeLevel(int level)

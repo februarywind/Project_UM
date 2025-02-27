@@ -19,14 +19,17 @@ public class U_BattleSkill : BattleSkillBase
     {
         playerController.Animator.SetTrigger("Battle");
         yield return Util.GetDelay(skillData.Delay);
+
         Vector3 skillDir = playerController.IsInput ? playerController.InputDir : transform.forward;
         EffectManager.instance.ParticlePlay("Flares", 1f, Vector3.up * 0.5f + transform.position + skillDir * skillData.Range / 2, Quaternion.LookRotation(skillDir) * Quaternion.Euler(0, 90, 0));
+        
         int indexLength = Physics.SphereCastNonAlloc(transform.position, skillData.Radius, skillDir, hits, skillData.Range, skillData.TargetLayer);
         for (int i = 0; i < indexLength; i++)
         {
             hits[i].transform.GetComponent<IDamagable>().TakeDamage(stat.AttackPower * skillData.DamageRatio, EAtackElement.Electric, transform);
         }
 
+        // excludeLayers은 캐릭터 컨트롤러가 충돌을 무시할 레이어다. 스킬 대상을 레이어에 넣어서 관통을 구현함
         playerController.characterController.excludeLayers += skillData.TargetLayer;
         playerController.characterController.Move(skillDir * skillData.Range);
         playerController.characterController.excludeLayers -= skillData.TargetLayer;

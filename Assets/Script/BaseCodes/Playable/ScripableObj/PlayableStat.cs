@@ -70,6 +70,7 @@ public class PlayableStat : ScriptableObject
     public float RunStaminaVFS => runStaminaVFS;
 
     public event Action<int> OnChangeLevel;
+    public event Action<int> OnChangeStatPoint;
     public event Action<float> OnChangeCurHp;
     public event Action<float> OnChangeCurStamina;
     public event Action<float> OnChangeAttackPower;
@@ -103,7 +104,7 @@ public class PlayableStat : ScriptableObject
         {
             return;
         }
-        StatPoint--;
+        OnChangeStatPoint?.Invoke(--StatPoint);
         levelUpStats[(int)stat] += statUpValue[(int)stat];
         AllChange();
     }

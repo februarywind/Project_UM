@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3192a4ba462969a49a59547770d10bac, type: 3}
   m_Name: U_StatModel
   m_EditorClassIdentifier: 
-  level: 1
-  StatPoint: 0
+  level: 6
+  StatPoint: 2
   statUpValue:
   - 10
   - 10
@@ -21,12 +21,12 @@ MonoBehaviour:
   levelUpStats:
   - 0
   - 0
-  - 0
+  - 6
   maxHp: 100
   maxStamina: 100
   attackPower: 10
   curHp: 100
-  curStamina: 100
+  curStamina: 60.72375
   IsInvincibility: 0
   staminaRegenWaitTime: 1
   staminaRFS: 10

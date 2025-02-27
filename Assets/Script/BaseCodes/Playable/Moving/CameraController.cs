@@ -11,6 +11,10 @@ public class CameraController : MonoBehaviour
     private CinemachineInputAxisController inputAxisController;
 
     private Transform follow;
+    private void Awake()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     private async void Start()
     {
@@ -22,14 +26,6 @@ public class CameraController : MonoBehaviour
         orbitalFollow = cinemachineCamera.GetComponent<CinemachineOrbitalFollow>();
         inputAxisController = cinemachineCamera.GetComponent<CinemachineInputAxisController>();
         follow = cinemachineCamera.Follow;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F2))
-        {
-            Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
-        }
     }
 
     public void CameraFollowChange(Transform transform)
